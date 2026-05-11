@@ -1,0 +1,157 @@
+aid: razorpay
+name: Razorpay
+description: >-
+  Razorpay is India's leading full-stack payments and business banking
+  platform, enabling merchants to accept, process, and disburse payments
+  across cards, UPI, netbanking, wallets, EMI, and BNPL through a single
+  integration. Its developer platform exposes a fully RESTful API at
+  https://api.razorpay.com/v1 (with select v2 resources) returning JSON,
+  secured by HTTP Basic authentication using a key_id and key_secret pair.
+  Beyond core payment processing, Razorpay offers payment links, hosted
+  pages, subscriptions, smart routing, refunds, settlements, payouts via
+  RazorpayX, and KYC-driven onboarding.
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - Payments
+  - Payment Gateway
+  - Fintech
+  - India
+  - UPI
+  - Subscriptions
+  - Payouts
+  - Checkout
+url: >-
+  https://raw.githubusercontent.com/api-evangelist/razorpay/refs/heads/main/apis.yml
+created: '2026-05-11'
+modified: '2026-05-11'
+specificationVersion: '0.19'
+apis:
+  - aid: razorpay:core-api
+    name: Razorpay Core REST API
+    description: >-
+      RESTful API covering orders, payments, refunds, customers, tokens,
+      invoices, payment links, virtual accounts, settlements, transfers,
+      subscriptions, and webhooks. Authentication is HTTP Basic using the
+      API key_id as username and key_secret as password; all endpoints
+      return JSON and follow standard HTTP semantics.
+    humanURL: https://razorpay.com/docs/api/
+    baseURL: https://api.razorpay.com/v1
+    tags:
+      - Payments
+      - REST API
+      - Basic Auth
+      - JSON
+    properties:
+      - type: Documentation
+        url: https://razorpay.com/docs/api/
+      - type: Authentication
+        url: https://razorpay.com/docs/api/authentication/
+      - type: Postman Collection
+        url: https://www.postman.com/razorpaydev/razorpay-public-workspace/overview
+      - type: Webhooks
+        url: https://razorpay.com/docs/webhooks/
+      - type: Errors
+        url: https://razorpay.com/docs/errors/
+  - aid: razorpay:payments-api
+    name: Razorpay Payments API
+    description: >-
+      Subset of the core REST API focused on creating orders, capturing
+      authorized payments, fetching payment details, issuing refunds, and
+      retrieving transfers for split settlements between linked accounts.
+    humanURL: https://razorpay.com/docs/api/payments/
+    baseURL: https://api.razorpay.com/v1
+    tags:
+      - Payments
+      - Orders
+      - Refunds
+    properties:
+      - type: Documentation
+        url: https://razorpay.com/docs/api/payments/
+
+common:
+  - type: Website
+    url: https://razorpay.com
+  - type: Documentation
+    url: https://razorpay.com/docs/
+  - type: API Reference
+    url: https://razorpay.com/docs/api/
+  - type: Pricing
+    url: https://razorpay.com/pricing/
+  - type: Sign Up
+    url: https://dashboard.razorpay.com/signup
+  - type: Dashboard
+    url: https://dashboard.razorpay.com
+  - type: Support
+    url: https://razorpay.com/support/
+  - type: Status
+    url: https://status.razorpay.com
+  - type: GitHub
+    url: https://github.com/razorpay
+  - type: Blog
+    url: https://razorpay.com/blog/
+features:
+  - name: Payment Gateway
+    description: >-
+      Accept payments via cards, UPI, netbanking, wallets, EMI, and pay-later
+      methods through a hosted Checkout, Standard SDK, or Custom integration.
+  - name: Payment Links and Pages
+    description: >-
+      Create shareable payment links and no-code hosted pages for collecting
+      payments without a website or app.
+  - name: Subscriptions
+    description: >-
+      Recurring billing with plans, add-ons, and automated retries supporting
+      cards, UPI Autopay, and e-mandate.
+  - name: RazorpayX Payouts
+    description: >-
+      Business banking API for outgoing payments via IMPS, NEFT, RTGS, UPI,
+      and card to bank, vendor, and employee payouts.
+  - name: Smart Collect
+    description: >-
+      Virtual accounts and UPI IDs for receiving and reconciling B2B
+      bank-transfer collections automatically.
+  - name: Webhooks
+    description: >-
+      Subscribe to events such as payment.captured, order.paid, refund.processed,
+      and subscription.charged for real-time event-driven integrations.
+solutions:
+  - name: E-commerce Checkout
+    description: >-
+      Drop-in Checkout integration accepting all popular Indian payment
+      methods with optimized conversion and one-tap UPI flows.
+  - name: SaaS Subscriptions
+    description: >-
+      Recurring billing for Indian and international subscribers with UPI
+      Autopay, e-mandate, and international cards.
+  - name: Marketplace Payments
+    description: >-
+      Route, split, and settle funds across linked accounts using Razorpay
+      Route for marketplaces and platforms.
+useCases:
+  - name: Accepting Online Payments
+    description: >-
+      Add card, UPI, netbanking, wallet, and EMI acceptance to a website
+      or mobile app with a single integration.
+  - name: Recurring Billing
+    description: >-
+      Charge customers on a recurring cadence using saved cards or UPI
+      Autopay mandates with automatic retries on failure.
+  - name: Vendor and Payroll Payouts
+    description: >-
+      Send instant IMPS/UPI payouts to vendors, freelancers, and employees
+      via the RazorpayX business banking API.
+integrations:
+  - name: Shopify
+    description: Razorpay payments app for Shopify checkout in India
+  - name: WooCommerce
+    description: Official WooCommerce plugin for Razorpay payments
+  - name: Magento
+    description: Magento 1 and 2 extensions for Razorpay
+  - name: Zoho
+    description: Razorpay integrations across Zoho Books, Invoice, and Subscriptions
+  - name: Tally
+    description: Reconcile Razorpay settlements into Tally accounting
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
