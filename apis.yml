@@ -74,17 +74,17 @@ common:
     url: https://razorpay.com
   - type: Documentation
     url: https://razorpay.com/docs/
-  - type: API Reference
+  - type: APIReference
     url: https://razorpay.com/docs/api/
   - type: Pricing
     url: https://razorpay.com/pricing/
-  - type: Sign Up
+  - type: SignUp
     url: https://dashboard.razorpay.com/signup
   - type: Dashboard
     url: https://dashboard.razorpay.com
   - type: Support
     url: https://razorpay.com/support/
-  - type: Status
+  - type: StatusPage
     url: https://status.razorpay.com
   - type: GitHub
     url: https://github.com/razorpay
