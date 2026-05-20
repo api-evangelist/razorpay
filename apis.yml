@@ -70,6 +70,8 @@ apis:
         url: https://razorpay.com/docs/api/payments/
 
 common:
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/razorpay
   - type: Website
     url: https://razorpay.com
   - type: Documentation
