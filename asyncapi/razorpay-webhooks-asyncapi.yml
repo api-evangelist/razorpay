@@ -1,0 +1,1486 @@
+asyncapi: 2.6.0
+info:
+  title: Razorpay Webhooks
+  version: "1.0.0"
+  description: |
+    AsyncAPI description of Razorpay's webhook surface. Razorpay POSTs JSON
+    event payloads to a merchant-configured webhook URL whenever a subscribed
+    event occurs (payments, orders, refunds, subscriptions, invoices,
+    settlements, virtual accounts, payment links, Route transfers, disputes,
+    and payment downtime notifications).
+
+    Each delivery includes an `X-Razorpay-Signature` header containing an
+    HMAC-SHA256 hex digest of the raw request body, computed with the
+    merchant's webhook secret as the key. Receivers must validate this
+    signature against the unparsed raw body before processing the event.
+  contact:
+    name: Razorpay
+    url: https://razorpay.com/docs/webhooks/
+  license:
+    name: Proprietary
+    url: https://razorpay.com/terms/
+  x-source-docs:
+    - https://razorpay.com/docs/webhooks/
+    - https://razorpay.com/docs/webhooks/validate-test/
+    - https://razorpay.com/docs/webhooks/payloads/payments/
+    - https://razorpay.com/docs/webhooks/payloads/subscriptions/
+    - https://razorpay.com/docs/webhooks/payloads/refunds/
+    - https://razorpay.com/docs/webhooks/payloads/invoices/
+    - https://razorpay.com/docs/webhooks/payloads/smart-collect/
+    - https://razorpay.com/docs/webhooks/payloads/payment-links/
+    - https://razorpay.com/docs/webhooks/payloads/route/
+    - https://razorpay.com/docs/webhooks/payloads/disputes/
+    - https://razorpay.com/docs/webhooks/payloads/orders/
+
+defaultContentType: application/json
+
+servers:
+  merchant-endpoint:
+    url: '{merchantWebhookUrl}'
+    protocol: https
+    description: |
+      Merchant-controlled HTTPS endpoint configured in the Razorpay Dashboard
+      that receives webhook event deliveries from Razorpay.
+    variables:
+      merchantWebhookUrl:
+        description: Fully qualified HTTPS URL registered as the webhook endpoint.
+        default: https://example.com/webhooks/razorpay
+
+channels:
+  webhook:
+    description: |
+      Single inbound channel that receives every subscribed Razorpay event.
+      The specific event is identified by the `event` field of the payload
+      and mirrored in the `X-Razorpay-Event-Id` delivery header.
+    bindings:
+      http:
+        type: request
+        method: POST
+        bindingVersion: '0.3.0'
+    subscribe:
+      summary: Receive Razorpay webhook events.
+      operationId: receiveRazorpayEvent
+      message:
+        oneOf:
+          - $ref: '#/components/messages/PaymentAuthorized'
+          - $ref: '#/components/messages/PaymentCaptured'
+          - $ref: '#/components/messages/PaymentFailed'
+          - $ref: '#/components/messages/PaymentDowntimeStarted'
+          - $ref: '#/components/messages/PaymentDowntimeUpdated'
+          - $ref: '#/components/messages/PaymentDowntimeResolved'
+          - $ref: '#/components/messages/PaymentDisputeCreated'
+          - $ref: '#/components/messages/PaymentDisputeWon'
+          - $ref: '#/components/messages/PaymentDisputeLost'
+          - $ref: '#/components/messages/PaymentDisputeClosed'
+          - $ref: '#/components/messages/PaymentDisputeUnderReview'
+          - $ref: '#/components/messages/PaymentDisputeActionRequired'
+          - $ref: '#/components/messages/OrderPaid'
+          - $ref: '#/components/messages/RefundCreated'
+          - $ref: '#/components/messages/RefundProcessed'
+          - $ref: '#/components/messages/RefundFailed'
+          - $ref: '#/components/messages/RefundSpeedChanged'
+          - $ref: '#/components/messages/SubscriptionAuthenticated'
+          - $ref: '#/components/messages/SubscriptionActivated'
+          - $ref: '#/components/messages/SubscriptionCharged'
+          - $ref: '#/components/messages/SubscriptionCompleted'
+          - $ref: '#/components/messages/SubscriptionUpdated'
+          - $ref: '#/components/messages/SubscriptionPending'
+          - $ref: '#/components/messages/SubscriptionHalted'
+          - $ref: '#/components/messages/SubscriptionPaused'
+          - $ref: '#/components/messages/SubscriptionResumed'
+          - $ref: '#/components/messages/SubscriptionCancelled'
+          - $ref: '#/components/messages/InvoicePaid'
+          - $ref: '#/components/messages/InvoicePartiallyPaid'
+          - $ref: '#/components/messages/InvoiceExpired'
+          - $ref: '#/components/messages/SettlementProcessed'
+          - $ref: '#/components/messages/VirtualAccountCreated'
+          - $ref: '#/components/messages/VirtualAccountCredited'
+          - $ref: '#/components/messages/VirtualAccountClosed'
+          - $ref: '#/components/messages/PaymentLinkPaid'
+          - $ref: '#/components/messages/PaymentLinkPartiallyPaid'
+          - $ref: '#/components/messages/PaymentLinkCancelled'
+          - $ref: '#/components/messages/PaymentLinkExpired'
+          - $ref: '#/components/messages/TransferProcessed'
+          - $ref: '#/components/messages/TransferFailed'
+          - $ref: '#/components/messages/ProductRouteActivated'
+          - $ref: '#/components/messages/ProductRouteUnderReview'
+          - $ref: '#/components/messages/ProductRouteNeedsClarification'
+
+components:
+  securitySchemes:
+    razorpaySignature:
+      type: httpApiKey
+      in: header
+      name: X-Razorpay-Signature
+      description: |
+        HMAC-SHA256 hex digest of the raw request body computed using the
+        merchant's webhook secret as the HMAC key. The receiver MUST
+        recompute the digest over the unparsed raw body and compare it
+        against this header value before trusting the payload.
+
+  messageTraits:
+    RazorpayWebhookDelivery:
+      headers:
+        type: object
+        required:
+          - X-Razorpay-Signature
+          - Content-Type
+        properties:
+          X-Razorpay-Signature:
+            type: string
+            description: HMAC-SHA256 hex digest of the raw request body, keyed with the webhook secret.
+            example: 3ce1c1b41fa5db64e63b69c3f9b07ce28a0a07a83b09dd06aa9ac4a6f70a4f6f
+          X-Razorpay-Event-Id:
+            type: string
+            description: Unique identifier for the webhook delivery; useful for idempotency.
+          Content-Type:
+            type: string
+            const: application/json
+          User-Agent:
+            type: string
+            description: Razorpay webhook delivery agent identifier.
+      bindings:
+        http:
+          headers:
+            type: object
+          bindingVersion: '0.3.0'
+
+  messages:
+    PaymentAuthorized:
+      name: payment.authorized
+      title: Payment Authorized
+      summary: A customer payment moved to the `authorized` state and is awaiting capture.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RazorpayWebhookDelivery'
+      payload:
+        $ref: '#/components/schemas/PaymentEventEnvelope'
+
+    PaymentCaptured:
+      name: payment.captured
+      title: Payment Captured
+      summary: An authorized payment was captured (funds will move to settlement).
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RazorpayWebhookDelivery'
+      payload:
+        $ref: '#/components/schemas/PaymentEventEnvelope'
+
+    PaymentFailed:
+      name: payment.failed
+      title: Payment Failed
+      summary: A payment attempt failed.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RazorpayWebhookDelivery'
+      payload:
+        $ref: '#/components/schemas/PaymentEventEnvelope'
+
+    PaymentDowntimeStarted:
+      name: payment.downtime.started
+      title: Payment Downtime Started
+      summary: A payment method (UPI/cards/netbanking/etc.) is experiencing reduced success rates.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RazorpayWebhookDelivery'
+      payload:
+        $ref: '#/components/schemas/PaymentDowntimeEventEnvelope'
+
+    PaymentDowntimeUpdated:
+      name: payment.downtime.updated
+      title: Payment Downtime Updated
+      summary: An ongoing payment downtime advisory was updated.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RazorpayWebhookDelivery'
+      payload:
+        $ref: '#/components/schemas/PaymentDowntimeEventEnvelope'
+
+    PaymentDowntimeResolved:
+      name: payment.downtime.resolved
+      title: Payment Downtime Resolved
+      summary: A previously reported payment downtime has been resolved.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RazorpayWebhookDelivery'
+      payload:
+        $ref: '#/components/schemas/PaymentDowntimeEventEnvelope'
+
+    PaymentDisputeCreated:
+      name: payment.dispute.created
+      title: Payment Dispute Created
+      summary: A customer or issuing bank raised a dispute on a payment.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RazorpayWebhookDelivery'
+      payload:
+        $ref: '#/components/schemas/DisputeEventEnvelope'
+
+    PaymentDisputeWon:
+      name: payment.dispute.won
+      title: Payment Dispute Won
+      summary: Merchant evidence prevailed; the dispute was resolved in merchant's favor.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RazorpayWebhookDelivery'
+      payload:
+        $ref: '#/components/schemas/DisputeEventEnvelope'
+
+    PaymentDisputeLost:
+      name: payment.dispute.lost
+      title: Payment Dispute Lost
+      summary: The dispute was resolved against the merchant.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RazorpayWebhookDelivery'
+      payload:
+        $ref: '#/components/schemas/DisputeEventEnvelope'
+
+    PaymentDisputeClosed:
+      name: payment.dispute.closed
+      title: Payment Dispute Closed
+      summary: The dispute lifecycle has been closed.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RazorpayWebhookDelivery'
+      payload:
+        $ref: '#/components/schemas/DisputeEventEnvelope'
+
+    PaymentDisputeUnderReview:
+      name: payment.dispute.under_review
+      title: Payment Dispute Under Review
+      summary: Submitted dispute evidence is being evaluated.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RazorpayWebhookDelivery'
+      payload:
+        $ref: '#/components/schemas/DisputeEventEnvelope'
+
+    PaymentDisputeActionRequired:
+      name: payment.dispute.action_required
+      title: Payment Dispute Action Required
+      summary: Merchant action is needed to respond to the dispute.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RazorpayWebhookDelivery'
+      payload:
+        $ref: '#/components/schemas/DisputeEventEnvelope'
+
+    OrderPaid:
+      name: order.paid
+      title: Order Paid
+      summary: An order has been fully paid; fires alongside `payment.captured`.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RazorpayWebhookDelivery'
+      payload:
+        $ref: '#/components/schemas/OrderPaidEventEnvelope'
+
+    RefundCreated:
+      name: refund.created
+      title: Refund Created
+      summary: A refund has been initiated against a payment.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RazorpayWebhookDelivery'
+      payload:
+        $ref: '#/components/schemas/RefundEventEnvelope'
+
+    RefundProcessed:
+      name: refund.processed
+      title: Refund Processed
+      summary: A refund was successfully processed.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RazorpayWebhookDelivery'
+      payload:
+        $ref: '#/components/schemas/RefundEventEnvelope'
+
+    RefundFailed:
+      name: refund.failed
+      title: Refund Failed
+      summary: A refund attempt failed.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RazorpayWebhookDelivery'
+      payload:
+        $ref: '#/components/schemas/RefundEventEnvelope'
+
+    RefundSpeedChanged:
+      name: refund.speed_changed
+      title: Refund Speed Changed
+      summary: The processing speed for a refund (normal vs optimum) changed.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RazorpayWebhookDelivery'
+      payload:
+        $ref: '#/components/schemas/RefundEventEnvelope'
+
+    SubscriptionAuthenticated:
+      name: subscription.authenticated
+      title: Subscription Authenticated
+      summary: A subscription mandate was authenticated by the customer.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RazorpayWebhookDelivery'
+      payload:
+        $ref: '#/components/schemas/SubscriptionEventEnvelope'
+
+    SubscriptionActivated:
+      name: subscription.activated
+      title: Subscription Activated
+      summary: The first charge succeeded and the subscription is now active.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RazorpayWebhookDelivery'
+      payload:
+        $ref: '#/components/schemas/SubscriptionEventEnvelope'
+
+    SubscriptionCharged:
+      name: subscription.charged
+      title: Subscription Charged
+      summary: A scheduled subscription charge succeeded.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RazorpayWebhookDelivery'
+      payload:
+        $ref: '#/components/schemas/SubscriptionEventEnvelope'
+
+    SubscriptionCompleted:
+      name: subscription.completed
+      title: Subscription Completed
+      summary: All scheduled subscription cycles have completed.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RazorpayWebhookDelivery'
+      payload:
+        $ref: '#/components/schemas/SubscriptionEventEnvelope'
+
+    SubscriptionUpdated:
+      name: subscription.updated
+      title: Subscription Updated
+      summary: Subscription details (plan, quantity, addons) were modified.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RazorpayWebhookDelivery'
+      payload:
+        $ref: '#/components/schemas/SubscriptionEventEnvelope'
+
+    SubscriptionPending:
+      name: subscription.pending
+      title: Subscription Pending
+      summary: A charge attempt failed; subscription is in retry/pending state.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RazorpayWebhookDelivery'
+      payload:
+        $ref: '#/components/schemas/SubscriptionEventEnvelope'
+
+    SubscriptionHalted:
+      name: subscription.halted
+      title: Subscription Halted
+      summary: Retries are exhausted; subscription has been halted.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RazorpayWebhookDelivery'
+      payload:
+        $ref: '#/components/schemas/SubscriptionEventEnvelope'
+
+    SubscriptionPaused:
+      name: subscription.paused
+      title: Subscription Paused
+      summary: Subscription has been paused by the merchant or customer.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RazorpayWebhookDelivery'
+      payload:
+        $ref: '#/components/schemas/SubscriptionEventEnvelope'
+
+    SubscriptionResumed:
+      name: subscription.resumed
+      title: Subscription Resumed
+      summary: A paused subscription has resumed.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RazorpayWebhookDelivery'
+      payload:
+        $ref: '#/components/schemas/SubscriptionEventEnvelope'
+
+    SubscriptionCancelled:
+      name: subscription.cancelled
+      title: Subscription Cancelled
+      summary: Subscription has been cancelled.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RazorpayWebhookDelivery'
+      payload:
+        $ref: '#/components/schemas/SubscriptionEventEnvelope'
+
+    InvoicePaid:
+      name: invoice.paid
+      title: Invoice Paid
+      summary: An invoice has been paid in full.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RazorpayWebhookDelivery'
+      payload:
+        $ref: '#/components/schemas/InvoiceEventEnvelope'
+
+    InvoicePartiallyPaid:
+      name: invoice.partially_paid
+      title: Invoice Partially Paid
+      summary: An invoice has received a partial payment.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RazorpayWebhookDelivery'
+      payload:
+        $ref: '#/components/schemas/InvoiceEventEnvelope'
+
+    InvoiceExpired:
+      name: invoice.expired
+      title: Invoice Expired
+      summary: An invoice expired without being paid.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RazorpayWebhookDelivery'
+      payload:
+        $ref: '#/components/schemas/InvoiceEventEnvelope'
+
+    SettlementProcessed:
+      name: settlement.processed
+      title: Settlement Processed
+      summary: A settlement payout was processed to the merchant's (or sub-merchant's) bank account.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RazorpayWebhookDelivery'
+      payload:
+        $ref: '#/components/schemas/SettlementEventEnvelope'
+
+    VirtualAccountCreated:
+      name: virtual_account.created
+      title: Virtual Account Created
+      summary: A Smart Collect virtual account / UPI ID was created.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RazorpayWebhookDelivery'
+      payload:
+        $ref: '#/components/schemas/VirtualAccountEventEnvelope'
+
+    VirtualAccountCredited:
+      name: virtual_account.credited
+      title: Virtual Account Credited
+      summary: Funds were received into a virtual account via bank transfer or UPI.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RazorpayWebhookDelivery'
+      payload:
+        $ref: '#/components/schemas/VirtualAccountEventEnvelope'
+
+    VirtualAccountClosed:
+      name: virtual_account.closed
+      title: Virtual Account Closed
+      summary: A virtual account was closed.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RazorpayWebhookDelivery'
+      payload:
+        $ref: '#/components/schemas/VirtualAccountEventEnvelope'
+
+    PaymentLinkPaid:
+      name: payment_link.paid
+      title: Payment Link Paid
+      summary: A payment link received a full payment.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RazorpayWebhookDelivery'
+      payload:
+        $ref: '#/components/schemas/PaymentLinkEventEnvelope'
+
+    PaymentLinkPartiallyPaid:
+      name: payment_link.partially_paid
+      title: Payment Link Partially Paid
+      summary: A payment link received a partial payment.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RazorpayWebhookDelivery'
+      payload:
+        $ref: '#/components/schemas/PaymentLinkEventEnvelope'
+
+    PaymentLinkCancelled:
+      name: payment_link.cancelled
+      title: Payment Link Cancelled
+      summary: A payment link was cancelled.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RazorpayWebhookDelivery'
+      payload:
+        $ref: '#/components/schemas/PaymentLinkEventEnvelope'
+
+    PaymentLinkExpired:
+      name: payment_link.expired
+      title: Payment Link Expired
+      summary: A payment link expired without being paid.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RazorpayWebhookDelivery'
+      payload:
+        $ref: '#/components/schemas/PaymentLinkEventEnvelope'
+
+    TransferProcessed:
+      name: transfer.processed
+      title: Transfer Processed
+      summary: A Razorpay Route transfer to a linked account completed.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RazorpayWebhookDelivery'
+      payload:
+        $ref: '#/components/schemas/TransferEventEnvelope'
+
+    TransferFailed:
+      name: transfer.failed
+      title: Transfer Failed
+      summary: A Razorpay Route transfer to a linked account failed.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RazorpayWebhookDelivery'
+      payload:
+        $ref: '#/components/schemas/TransferEventEnvelope'
+
+    ProductRouteActivated:
+      name: product.route.activated
+      title: Route Product Activated
+      summary: Razorpay Route has been activated for the account.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RazorpayWebhookDelivery'
+      payload:
+        $ref: '#/components/schemas/ProductRouteEventEnvelope'
+
+    ProductRouteUnderReview:
+      name: product.route.under_review
+      title: Route Product Under Review
+      summary: Razorpay Route activation is pending review.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RazorpayWebhookDelivery'
+      payload:
+        $ref: '#/components/schemas/ProductRouteEventEnvelope'
+
+    ProductRouteNeedsClarification:
+      name: product.route.needs_clarification
+      title: Route Product Needs Clarification
+      summary: Razorpay Route activation requires additional information.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RazorpayWebhookDelivery'
+      payload:
+        $ref: '#/components/schemas/ProductRouteEventEnvelope'
+
+  schemas:
+    EventEnvelopeBase:
+      type: object
+      required:
+        - entity
+        - account_id
+        - event
+        - contains
+        - payload
+        - created_at
+      properties:
+        entity:
+          type: string
+          const: event
+          description: Always `event` for webhook payloads.
+        account_id:
+          type: string
+          description: Identifier of the Razorpay merchant account that owns the event.
+          example: acc_BFQ7uQEaa7j2YY
+        event:
+          type: string
+          description: Dotted event name (e.g. `payment.captured`).
+        contains:
+          type: array
+          description: List of top-level entity keys present in `payload`.
+          items:
+            type: string
+        payload:
+          type: object
+          description: Map of entity name to entity envelope.
+        created_at:
+          type: integer
+          format: int64
+          description: Event creation time as a Unix epoch (seconds).
+
+    EntityEnvelope:
+      type: object
+      required:
+        - entity
+      properties:
+        entity:
+          type: object
+          description: The actual entity object as returned by the Razorpay REST API.
+
+    Payment:
+      type: object
+      description: Razorpay payment entity (subset of fields).
+      properties:
+        id:
+          type: string
+          example: pay_DESlfP9TPzKnEh
+        entity:
+          type: string
+          const: payment
+        amount:
+          type: integer
+          description: Payment amount in the smallest currency unit (e.g. paise).
+        currency:
+          type: string
+          example: INR
+        status:
+          type: string
+          enum: [created, authorized, captured, refunded, failed]
+        order_id:
+          type: string
+        invoice_id:
+          type: string
+          nullable: true
+        international:
+          type: boolean
+        method:
+          type: string
+          description: Payment method (card, netbanking, upi, wallet, emi, etc.).
+        amount_refunded:
+          type: integer
+        refund_status:
+          type: string
+          nullable: true
+        captured:
+          type: boolean
+        description:
+          type: string
+          nullable: true
+        card_id:
+          type: string
+          nullable: true
+        bank:
+          type: string
+          nullable: true
+        wallet:
+          type: string
+          nullable: true
+        vpa:
+          type: string
+          nullable: true
+        email:
+          type: string
+        contact:
+          type: string
+        notes:
+          type: object
+          additionalProperties: true
+        fee:
+          type: integer
+          nullable: true
+        tax:
+          type: integer
+          nullable: true
+        error_code:
+          type: string
+          nullable: true
+        error_description:
+          type: string
+          nullable: true
+        error_source:
+          type: string
+          nullable: true
+        error_step:
+          type: string
+          nullable: true
+        error_reason:
+          type: string
+          nullable: true
+        acquirer_data:
+          type: object
+          additionalProperties: true
+        created_at:
+          type: integer
+          format: int64
+
+    Order:
+      type: object
+      description: Razorpay order entity (subset of fields).
+      properties:
+        id:
+          type: string
+          example: order_DESlfP9TPzKnEh
+        entity:
+          type: string
+          const: order
+        amount:
+          type: integer
+        amount_paid:
+          type: integer
+        amount_due:
+          type: integer
+        currency:
+          type: string
+        receipt:
+          type: string
+          nullable: true
+        status:
+          type: string
+          enum: [created, attempted, paid]
+        attempts:
+          type: integer
+        notes:
+          type: object
+          additionalProperties: true
+        created_at:
+          type: integer
+          format: int64
+
+    Refund:
+      type: object
+      description: Razorpay refund entity (subset of fields).
+      properties:
+        id:
+          type: string
+          example: rfnd_FP8DDKxqJif6ca
+        entity:
+          type: string
+          const: refund
+        amount:
+          type: integer
+        currency:
+          type: string
+        payment_id:
+          type: string
+        notes:
+          type: object
+          additionalProperties: true
+        receipt:
+          type: string
+          nullable: true
+        acquirer_data:
+          type: object
+          additionalProperties: true
+        created_at:
+          type: integer
+          format: int64
+        batch_id:
+          type: string
+          nullable: true
+        status:
+          type: string
+          enum: [pending, processed, failed]
+        speed_processed:
+          type: string
+          nullable: true
+        speed_requested:
+          type: string
+          nullable: true
+
+    Subscription:
+      type: object
+      description: Razorpay subscription entity (subset of fields).
+      properties:
+        id:
+          type: string
+          example: sub_00000000000001
+        entity:
+          type: string
+          const: subscription
+        plan_id:
+          type: string
+        customer_id:
+          type: string
+          nullable: true
+        status:
+          type: string
+          enum:
+            - created
+            - authenticated
+            - active
+            - pending
+            - halted
+            - cancelled
+            - completed
+            - expired
+            - paused
+        current_start:
+          type: integer
+          format: int64
+          nullable: true
+        current_end:
+          type: integer
+          format: int64
+          nullable: true
+        ended_at:
+          type: integer
+          format: int64
+          nullable: true
+        quantity:
+          type: integer
+        notes:
+          type: object
+          additionalProperties: true
+        charge_at:
+          type: integer
+          format: int64
+          nullable: true
+        start_at:
+          type: integer
+          format: int64
+        end_at:
+          type: integer
+          format: int64
+        auth_attempts:
+          type: integer
+        total_count:
+          type: integer
+        paid_count:
+          type: integer
+        customer_notify:
+          type: boolean
+        created_at:
+          type: integer
+          format: int64
+        expire_by:
+          type: integer
+          format: int64
+          nullable: true
+        short_url:
+          type: string
+          nullable: true
+        has_scheduled_changes:
+          type: boolean
+        change_scheduled_at:
+          type: integer
+          format: int64
+          nullable: true
+        source:
+          type: string
+          nullable: true
+        remaining_count:
+          type: integer
+
+    Invoice:
+      type: object
+      description: Razorpay invoice entity (subset of fields).
+      properties:
+        id:
+          type: string
+          example: inv_DAweOiQ7amIUVd
+        entity:
+          type: string
+          const: invoice
+        receipt:
+          type: string
+          nullable: true
+        invoice_number:
+          type: string
+          nullable: true
+        customer_id:
+          type: string
+          nullable: true
+        customer_details:
+          type: object
+          additionalProperties: true
+        order_id:
+          type: string
+          nullable: true
+        line_items:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        payment_id:
+          type: string
+          nullable: true
+        status:
+          type: string
+          enum: [draft, issued, partially_paid, paid, expired, cancelled, deleted]
+        expire_by:
+          type: integer
+          format: int64
+          nullable: true
+        issued_at:
+          type: integer
+          format: int64
+          nullable: true
+        paid_at:
+          type: integer
+          format: int64
+          nullable: true
+        cancelled_at:
+          type: integer
+          format: int64
+          nullable: true
+        expired_at:
+          type: integer
+          format: int64
+          nullable: true
+        amount:
+          type: integer
+        amount_paid:
+          type: integer
+        amount_due:
+          type: integer
+        currency:
+          type: string
+        short_url:
+          type: string
+          nullable: true
+        notes:
+          type: object
+          additionalProperties: true
+        created_at:
+          type: integer
+          format: int64
+
+    Settlement:
+      type: object
+      description: Razorpay settlement entity (subset of fields).
+      properties:
+        id:
+          type: string
+          example: setl_DGlQ1Rj8os78Ec
+        entity:
+          type: string
+          const: settlement
+        amount:
+          type: integer
+        status:
+          type: string
+          enum: [created, processed, failed]
+        fees:
+          type: integer
+        tax:
+          type: integer
+        utr:
+          type: string
+          nullable: true
+        created_at:
+          type: integer
+          format: int64
+
+    VirtualAccount:
+      type: object
+      description: Razorpay Smart Collect virtual account entity (subset of fields).
+      properties:
+        id:
+          type: string
+          example: va_DlGmm7jInLudH9
+        entity:
+          type: string
+          const: virtual_account
+        status:
+          type: string
+          enum: [active, closed]
+        description:
+          type: string
+          nullable: true
+        amount_expected:
+          type: integer
+          nullable: true
+        notes:
+          type: object
+          additionalProperties: true
+        amount_paid:
+          type: integer
+        customer_id:
+          type: string
+          nullable: true
+        receivers:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        close_by:
+          type: integer
+          format: int64
+          nullable: true
+        closed_at:
+          type: integer
+          format: int64
+          nullable: true
+        created_at:
+          type: integer
+          format: int64
+
+    BankTransfer:
+      type: object
+      description: Bank transfer entity attached to virtual_account.credited events.
+      properties:
+        id:
+          type: string
+        entity:
+          type: string
+          const: bank_transfer
+        payment_id:
+          type: string
+        mode:
+          type: string
+          enum: [NEFT, RTGS, IMPS, UPI]
+        bank_reference:
+          type: string
+        amount:
+          type: integer
+        payer_bank_account:
+          type: object
+          additionalProperties: true
+        virtual_account_id:
+          type: string
+        virtual_account:
+          $ref: '#/components/schemas/VirtualAccount'
+
+    PaymentLink:
+      type: object
+      description: Razorpay payment link entity (subset of fields).
+      properties:
+        id:
+          type: string
+          example: plink_ExjpAUN3gVHrPJ
+        entity:
+          type: string
+          const: payment_link
+        amount:
+          type: integer
+        amount_paid:
+          type: integer
+        currency:
+          type: string
+        status:
+          type: string
+          enum: [created, partially_paid, paid, cancelled, expired]
+        description:
+          type: string
+          nullable: true
+        short_url:
+          type: string
+        reference_id:
+          type: string
+          nullable: true
+        customer:
+          type: object
+          additionalProperties: true
+        notify:
+          type: object
+          additionalProperties: true
+        notes:
+          type: object
+          additionalProperties: true
+        accept_partial:
+          type: boolean
+        first_min_partial_amount:
+          type: integer
+          nullable: true
+        expire_by:
+          type: integer
+          format: int64
+          nullable: true
+        created_at:
+          type: integer
+          format: int64
+        updated_at:
+          type: integer
+          format: int64
+
+    Transfer:
+      type: object
+      description: Razorpay Route transfer entity (subset of fields).
+      properties:
+        id:
+          type: string
+          example: trf_E7g2hKjT4hV2bN
+        entity:
+          type: string
+          const: transfer
+        source:
+          type: string
+        recipient:
+          type: string
+        amount:
+          type: integer
+        currency:
+          type: string
+        amount_reversed:
+          type: integer
+        notes:
+          type: object
+          additionalProperties: true
+        fees:
+          type: integer
+        tax:
+          type: integer
+        on_hold:
+          type: boolean
+        on_hold_until:
+          type: integer
+          format: int64
+          nullable: true
+        recipient_settlement_id:
+          type: string
+          nullable: true
+        created_at:
+          type: integer
+          format: int64
+        linked_account_notes:
+          type: array
+          items:
+            type: string
+        processed_at:
+          type: integer
+          format: int64
+          nullable: true
+        error:
+          type: object
+          additionalProperties: true
+
+    Dispute:
+      type: object
+      description: Razorpay dispute entity (subset of fields).
+      properties:
+        id:
+          type: string
+          example: disp_Eb2PoV3Pn9oXOl
+        entity:
+          type: string
+          const: dispute
+        payment_id:
+          type: string
+        amount:
+          type: integer
+        currency:
+          type: string
+        amount_deducted:
+          type: integer
+        reason_code:
+          type: string
+          nullable: true
+        respond_by:
+          type: integer
+          format: int64
+          nullable: true
+        status:
+          type: string
+          enum: [open, under_review, won, lost, closed]
+        phase:
+          type: string
+          nullable: true
+        created_at:
+          type: integer
+          format: int64
+        evidence:
+          type: object
+          additionalProperties: true
+
+    PaymentDowntime:
+      type: object
+      description: Razorpay payment downtime advisory entity (subset of fields).
+      properties:
+        id:
+          type: string
+        entity:
+          type: string
+          const: payment.downtime
+        method:
+          type: string
+        begin:
+          type: integer
+          format: int64
+        end:
+          type: integer
+          format: int64
+          nullable: true
+        status:
+          type: string
+          enum: [started, resolved, scheduled, cancelled]
+        scheduled:
+          type: boolean
+        severity:
+          type: string
+          enum: [low, medium, high]
+        instrument:
+          type: object
+          additionalProperties: true
+        created_at:
+          type: integer
+          format: int64
+        updated_at:
+          type: integer
+          format: int64
+
+    RouteProductConfiguration:
+      type: object
+      description: Razorpay Route product activation state (subset of fields).
+      properties:
+        id:
+          type: string
+        entity:
+          type: string
+        product_name:
+          type: string
+          const: route
+        activation_status:
+          type: string
+          enum: [requested, needs_clarification, under_review, activated, rejected]
+        requested_configuration:
+          type: object
+          additionalProperties: true
+        active_configuration:
+          type: object
+          additionalProperties: true
+        requirements:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+
+    PaymentEventEnvelope:
+      allOf:
+        - $ref: '#/components/schemas/EventEnvelopeBase'
+        - type: object
+          properties:
+            payload:
+              type: object
+              required: [payment]
+              properties:
+                payment:
+                  type: object
+                  required: [entity]
+                  properties:
+                    entity:
+                      $ref: '#/components/schemas/Payment'
+                order:
+                  type: object
+                  properties:
+                    entity:
+                      $ref: '#/components/schemas/Order'
+
+    PaymentDowntimeEventEnvelope:
+      allOf:
+        - $ref: '#/components/schemas/EventEnvelopeBase'
+        - type: object
+          properties:
+            payload:
+              type: object
+              required: [payment.downtime]
+              properties:
+                payment.downtime:
+                  type: object
+                  required: [entity]
+                  properties:
+                    entity:
+                      $ref: '#/components/schemas/PaymentDowntime'
+
+    DisputeEventEnvelope:
+      allOf:
+        - $ref: '#/components/schemas/EventEnvelopeBase'
+        - type: object
+          properties:
+            payload:
+              type: object
+              required: [payment, dispute]
+              properties:
+                payment:
+                  type: object
+                  properties:
+                    entity:
+                      $ref: '#/components/schemas/Payment'
+                dispute:
+                  type: object
+                  required: [entity]
+                  properties:
+                    entity:
+                      $ref: '#/components/schemas/Dispute'
+
+    OrderPaidEventEnvelope:
+      allOf:
+        - $ref: '#/components/schemas/EventEnvelopeBase'
+        - type: object
+          properties:
+            payload:
+              type: object
+              required: [order, payment]
+              properties:
+                order:
+                  type: object
+                  required: [entity]
+                  properties:
+                    entity:
+                      $ref: '#/components/schemas/Order'
+                payment:
+                  type: object
+                  required: [entity]
+                  properties:
+                    entity:
+                      $ref: '#/components/schemas/Payment'
+
+    RefundEventEnvelope:
+      allOf:
+        - $ref: '#/components/schemas/EventEnvelopeBase'
+        - type: object
+          properties:
+            payload:
+              type: object
+              required: [refund, payment]
+              properties:
+                refund:
+                  type: object
+                  required: [entity]
+                  properties:
+                    entity:
+                      $ref: '#/components/schemas/Refund'
+                payment:
+                  type: object
+                  properties:
+                    entity:
+                      $ref: '#/components/schemas/Payment'
+
+    SubscriptionEventEnvelope:
+      allOf:
+        - $ref: '#/components/schemas/EventEnvelopeBase'
+        - type: object
+          properties:
+            payload:
+              type: object
+              required: [subscription]
+              properties:
+                subscription:
+                  type: object
+                  required: [entity]
+                  properties:
+                    entity:
+                      $ref: '#/components/schemas/Subscription'
+                payment:
+                  type: object
+                  properties:
+                    entity:
+                      $ref: '#/components/schemas/Payment'
+
+    InvoiceEventEnvelope:
+      allOf:
+        - $ref: '#/components/schemas/EventEnvelopeBase'
+        - type: object
+          properties:
+            payload:
+              type: object
+              required: [invoice]
+              properties:
+                invoice:
+                  type: object
+                  required: [entity]
+                  properties:
+                    entity:
+                      $ref: '#/components/schemas/Invoice'
+                order:
+                  type: object
+                  properties:
+                    entity:
+                      $ref: '#/components/schemas/Order'
+                payment:
+                  type: object
+                  properties:
+                    entity:
+                      $ref: '#/components/schemas/Payment'
+
+    SettlementEventEnvelope:
+      allOf:
+        - $ref: '#/components/schemas/EventEnvelopeBase'
+        - type: object
+          properties:
+            payload:
+              type: object
+              required: [settlement]
+              properties:
+                settlement:
+                  type: object
+                  required: [entity]
+                  properties:
+                    entity:
+                      $ref: '#/components/schemas/Settlement'
+
+    VirtualAccountEventEnvelope:
+      allOf:
+        - $ref: '#/components/schemas/EventEnvelopeBase'
+        - type: object
+          properties:
+            payload:
+              type: object
+              required: [virtual_account]
+              properties:
+                virtual_account:
+                  type: object
+                  required: [entity]
+                  properties:
+                    entity:
+                      $ref: '#/components/schemas/VirtualAccount'
+                payment:
+                  type: object
+                  properties:
+                    entity:
+                      $ref: '#/components/schemas/Payment'
+                bank_transfer:
+                  type: object
+                  properties:
+                    entity:
+                      $ref: '#/components/schemas/BankTransfer'
+
+    PaymentLinkEventEnvelope:
+      allOf:
+        - $ref: '#/components/schemas/EventEnvelopeBase'
+        - type: object
+          properties:
+            payload:
+              type: object
+              required: [payment_link]
+              properties:
+                payment_link:
+                  type: object
+                  required: [entity]
+                  properties:
+                    entity:
+                      $ref: '#/components/schemas/PaymentLink'
+                order:
+                  type: object
+                  properties:
+                    entity:
+                      $ref: '#/components/schemas/Order'
+                payment:
+                  type: object
+                  properties:
+                    entity:
+                      $ref: '#/components/schemas/Payment'
+
+    TransferEventEnvelope:
+      allOf:
+        - $ref: '#/components/schemas/EventEnvelopeBase'
+        - type: object
+          properties:
+            payload:
+              type: object
+              required: [transfer]
+              properties:
+                transfer:
+                  type: object
+                  required: [entity]
+                  properties:
+                    entity:
+                      $ref: '#/components/schemas/Transfer'
+
+    ProductRouteEventEnvelope:
+      allOf:
+        - $ref: '#/components/schemas/EventEnvelopeBase'
+        - type: object
+          properties:
+            payload:
+              type: object
+              required: [product_configuration]
+              properties:
+                product_configuration:
+                  type: object
+                  required: [entity]
+                  properties:
+                    entity:
+                      $ref: '#/components/schemas/RouteProductConfiguration'
