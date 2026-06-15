@@ -1,0 +1,364 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Razorpay Core REST API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "List orders",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://api.razorpay.com/v1/orders",
+        "params": [
+          {
+            "name": "from",
+            "value": "",
+            "type": "query"
+          },
+          {
+            "name": "to",
+            "value": "",
+            "type": "query"
+          },
+          {
+            "name": "count",
+            "value": "",
+            "type": "query"
+          },
+          {
+            "name": "skip",
+            "value": "",
+            "type": "query"
+          },
+          {
+            "name": "authorized",
+            "value": "",
+            "type": "query"
+          },
+          {
+            "name": "receipt",
+            "value": "",
+            "type": "query"
+          },
+          {
+            "name": "expand[]",
+            "value": "",
+            "type": "query"
+          }
+        ]
+      },
+      "docs": "List orders"
+    },
+    {
+      "info": {
+        "name": "Create an order",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://api.razorpay.com/v1/orders",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Create an order"
+    },
+    {
+      "info": {
+        "name": "Get an order",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://api.razorpay.com/v1/orders/:id",
+        "params": [
+          {
+            "name": "id",
+            "value": "",
+            "type": "path"
+          }
+        ]
+      },
+      "docs": "Get an order"
+    },
+    {
+      "info": {
+        "name": "Update an order",
+        "type": "http"
+      },
+      "http": {
+        "method": "PATCH",
+        "url": "https://api.razorpay.com/v1/orders/:id",
+        "params": [
+          {
+            "name": "id",
+            "value": "",
+            "type": "path"
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Update an order"
+    },
+    {
+      "info": {
+        "name": "Get payments for an order",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://api.razorpay.com/v1/orders/:id/payments",
+        "params": [
+          {
+            "name": "id",
+            "value": "",
+            "type": "path"
+          }
+        ]
+      },
+      "docs": "Get payments for an order"
+    },
+    {
+      "info": {
+        "name": "List payments",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://api.razorpay.com/v1/payments",
+        "params": [
+          {
+            "name": "from",
+            "value": "",
+            "type": "query"
+          },
+          {
+            "name": "to",
+            "value": "",
+            "type": "query"
+          },
+          {
+            "name": "count",
+            "value": "",
+            "type": "query"
+          },
+          {
+            "name": "skip",
+            "value": "",
+            "type": "query"
+          }
+        ]
+      },
+      "docs": "List payments"
+    },
+    {
+      "info": {
+        "name": "Get a payment",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://api.razorpay.com/v1/payments/:id",
+        "params": [
+          {
+            "name": "id",
+            "value": "",
+            "type": "path"
+          }
+        ]
+      },
+      "docs": "Get a payment"
+    },
+    {
+      "info": {
+        "name": "Update a payment (notes)",
+        "type": "http"
+      },
+      "http": {
+        "method": "PATCH",
+        "url": "https://api.razorpay.com/v1/payments/:id",
+        "params": [
+          {
+            "name": "id",
+            "value": "",
+            "type": "path"
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Update a payment (notes)"
+    },
+    {
+      "info": {
+        "name": "Capture an authorized payment",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://api.razorpay.com/v1/payments/:id/capture",
+        "params": [
+          {
+            "name": "id",
+            "value": "",
+            "type": "path"
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Capture an authorized payment"
+    },
+    {
+      "info": {
+        "name": "Get card used for a payment",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://api.razorpay.com/v1/payments/:id/card",
+        "params": [
+          {
+            "name": "id",
+            "value": "",
+            "type": "path"
+          }
+        ]
+      },
+      "docs": "Get card used for a payment"
+    },
+    {
+      "info": {
+        "name": "Refund a captured payment",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://api.razorpay.com/v1/payments/:id/refund",
+        "params": [
+          {
+            "name": "id",
+            "value": "",
+            "type": "path"
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Refund a captured payment"
+    },
+    {
+      "info": {
+        "name": "List refunds for a payment",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://api.razorpay.com/v1/payments/:id/refunds",
+        "params": [
+          {
+            "name": "id",
+            "value": "",
+            "type": "path"
+          }
+        ]
+      },
+      "docs": "List refunds for a payment"
+    },
+    {
+      "info": {
+        "name": "List all refunds",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://api.razorpay.com/v1/refunds",
+        "params": [
+          {
+            "name": "from",
+            "value": "",
+            "type": "query"
+          },
+          {
+            "name": "to",
+            "value": "",
+            "type": "query"
+          },
+          {
+            "name": "count",
+            "value": "",
+            "type": "query"
+          },
+          {
+            "name": "skip",
+            "value": "",
+            "type": "query"
+          }
+        ]
+      },
+      "docs": "List all refunds"
+    },
+    {
+      "info": {
+        "name": "Get a refund",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://api.razorpay.com/v1/refunds/:id",
+        "params": [
+          {
+            "name": "id",
+            "value": "",
+            "type": "path"
+          }
+        ]
+      },
+      "docs": "Get a refund"
+    },
+    {
+      "info": {
+        "name": "Update refund notes",
+        "type": "http"
+      },
+      "http": {
+        "method": "PATCH",
+        "url": "https://api.razorpay.com/v1/refunds/:id",
+        "params": [
+          {
+            "name": "id",
+            "value": "",
+            "type": "path"
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Update refund notes"
+    }
+  ],
+  "bundled": true
+}
