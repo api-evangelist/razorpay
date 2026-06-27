@@ -47,11 +47,11 @@ apis:
         url: https://razorpay.com/docs/api/
       - type: Authentication
         url: https://razorpay.com/docs/api/authentication/
-      - type: Postman Collection
+      - type: PostmanCollection
         url: https://www.postman.com/razorpaydev/razorpay-public-workspace/overview
       - type: Webhooks
         url: https://razorpay.com/docs/webhooks/
-      - type: Errors
+      - type: ErrorCodes
         url: https://razorpay.com/docs/errors/
   - aid: razorpay:payments-api
     name: Razorpay Payments API
@@ -105,7 +105,7 @@ common:
     url: https://razorpay.com/docs/api/
   - type: Pricing
     url: https://razorpay.com/pricing/
-  - type: SignUp
+  - type: Signup
     url: https://dashboard.razorpay.com/signup
   - type: Dashboard
     url: https://dashboard.razorpay.com
