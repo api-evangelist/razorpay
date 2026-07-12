@@ -1,0 +1,13 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/razorpay-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: basicAuth
+  type: http
+  scheme: basic
+  description: HTTP Basic auth — username is Razorpay key_id, password is key_secret.
+  sources:
+  - openapi/razorpay-openapi.yml

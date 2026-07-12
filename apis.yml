@@ -95,6 +95,12 @@ apis:
         url: https://razorpay.com/docs/webhooks/payloads/
 
 common:
+  - type: VulnerabilityDisclosure
+    url: security/razorpay-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/razorpay-domain-security.yml
+  - type: Authentication
+    url: authentication/razorpay-authentication.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/razorpay
   - type: Website
