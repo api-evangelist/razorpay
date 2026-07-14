@@ -1,0 +1,66 @@
+generated: '2026-07-14'
+method: searched
+source: https://razorpay.com/docs/payments/payments/test-card-details/
+description: >-
+  Razorpay's sandbox / test-data surface — the mode separation, magic test
+  values, and simulation behavior a developer needs to exercise the API without
+  moving real money. Captured verbatim from Razorpay's testing docs. Razorpay
+  separates test and live by API key mode (rzp_test_ vs rzp_live_ key_id); test
+  mode shows a mock bank page with Success and Failure buttons and no real money
+  moves.
+docs:
+  - https://razorpay.com/docs/payments/payments/test-card-details/
+  - https://razorpay.com/docs/payments/payments/test-upi-details/
+  - https://razorpay.com/docs/api/sandbox-setup/
+  - https://razorpay.com/docs/payments/dashboard/test-live-modes/
+
+modes:
+  - name: test
+    key_prefix: rzp_test_
+    notes: >-
+      Isolated sandbox replica. Processes only simulated transactions; no real
+      money moves. A separate key_id/key_secret pair is generated per mode from
+      Dashboard > Account & Settings > API Keys.
+  - name: live
+    key_prefix: rzp_live_
+    notes: Production mode; real money movement. Requires KYC activation.
+
+key_formats:
+  key_id: {test: rzp_test_..., live: rzp_live_...}
+  auth: HTTP Basic — key_id as username, key_secret as password.
+
+test_cards:
+  conventions:
+    cvv: Any random CVV (3 digits).
+    expiry: Any future date.
+    otp: >-
+      On the mock OTP page, enter a random OTP of 4-10 digits to make the payment
+      succeed; enter an OTP below 4 digits to fail the payment.
+    mock_bank_page: Test mode shows a mock bank page with Success and Failure buttons.
+    note: Test cards work in test mode only.
+  domestic:
+    - {network: mastercard, number: '5267 3181 8797 5449'}
+    - {network: visa, number: '4111 1111 1111 1111'}
+  international:
+    - {network: mastercard, number: '5555 5555 5555 4444'}
+    - {network: mastercard, number: '5105 1051 0510 5100'}
+    - {network: visa, number: '4012 8888 8888 1881'}
+    - {network: visa, number: '5104 0600 0000 0008'}
+  subscriptions:
+    - {network: mastercard, type: domestic debit, number: '5104 0600 0000 0008'}
+    - {network: visa, type: domestic credit, number: '4718 6091 0820 4366'}
+    - {network: mastercard, type: international credit, number: '5104 0155 5555 5558'}
+  emi:
+    - {network: mastercard, number: '5241 8100 0000 0000'}
+
+test_upi:
+  ids:
+    - {vpa: success@razorpay, behavior: Instant successful transfer.}
+    - {vpa: failure@razorpay, behavior: Instant declined transaction.}
+  note: >-
+    In test mode, UPI payment cancellation results in a successful payment — use
+    live mode to test UPI payment cancellation.
+
+simulation:
+  bank_page: Mock bank page with Success/Failure buttons replaces the live 3DS/bank redirect.
+  otp_control: OTP length (>=4 digits succeeds, <4 digits fails) controls the outcome.

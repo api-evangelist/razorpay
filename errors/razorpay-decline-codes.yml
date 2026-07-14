@@ -1,0 +1,35 @@
+generated: '2026-07-14'
+method: searched
+source: https://razorpay.com/docs/errors/payments/cards/
+description: >-
+  Razorpay's payment failure / decline reason taxonomy — the issuer- and
+  gateway-level reasons a payment is not completed. Distinct from the API-level
+  error classes: a failed payment carries an error object whose code is a class
+  (BAD_REQUEST_ERROR / GATEWAY_ERROR / SERVER_ERROR), whose source attributes
+  fault (customer / business / bank / gateway), whose step names the payment
+  stage, and whose reason is the specific decline code below.
+docs:
+  - https://razorpay.com/docs/errors/payments/list/
+  - https://razorpay.com/docs/errors/payments/cards/
+  - https://razorpay.com/docs/api/errors/
+envelope_field: error.reason   # accompanied by error.code (class), error.source, error.step
+code_classes: [BAD_REQUEST_ERROR, GATEWAY_ERROR, SERVER_ERROR]
+source_values: [customer, business, bank, gateway]
+decline_codes:
+  - {code: payment_timed_out, meaning: Customer exceeded the time limit (typically ~10 min) for payment processing, source: customer, action: Ask the customer to retry within the time limit.}
+  - {code: payment_cancelled, meaning: Customer cancelled the transaction or pressed the back button, source: customer, action: Suggest retry or payment later.}
+  - {code: card_declined, meaning: Payment declined by the customer's bank, source: bank, action: Customer contacts the bank; try an alternate card.}
+  - {code: insufficient_funds, meaning: Customer's account lacked funds for the transaction, source: customer, action: Verify balance before retrying.}
+  - {code: card_not_enrolled, meaning: Card not activated/enrolled for online transactions, source: customer, action: Enable online transactions via the banking app.}
+  - {code: card_disabled_for_online_payments, meaning: Card not enabled for online transactions, source: customer, action: Enable online use via card controls in the banking portal.}
+  - {code: debit_instrument_inactive, meaning: Card not enabled for online transactions, source: customer, action: Enable via banking app or net banking.}
+  - {code: debit_instrument_blocked, meaning: Card blocked by the customer or bank, source: bank, action: Contact the bank to unblock; use an alternate card.}
+  - {code: card_expired, meaning: Customer's card has expired, source: customer, action: Use an active card or contact the bank.}
+  - {code: incorrect_cvv, meaning: Customer entered the wrong CVV, source: customer, action: Retry with correct CVV or use a CVV-less saved-card flow.}
+  - {code: invalid_otp, meaning: Authentication failed due to incorrect OTP, source: customer, action: Re-enter the correct OTP; use Native OTP if available.}
+  - {code: authentication_failed, meaning: Incorrect OTP or browser closed during verification, source: customer, action: Re-enter OTP correctly.}
+  - {code: payment_risk_check_failed, meaning: Bank declined the payment as fraudulent, source: bank, action: Customer contacts the bank; try an alternate card.}
+  - {code: payment_failed, meaning: Bank declined the transaction, source: bank, action: Customer contacts the bank; attempt with a different card.}
+  - {code: transaction_limit_exceeded, meaning: Maximum daily transaction limit reached, source: bank, action: Retry with a different card or payment method.}
+  - {code: gateway_technical_error, meaning: Downtime on the partner bank causing payment failure, source: gateway, action: Consider multi-terminal/smart routing.}
+  - {code: bank_technical_error, meaning: Downtime on the customer's bank, source: bank, action: Use an alternate bank or integrate the Downtime API.}

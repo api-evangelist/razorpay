@@ -95,6 +95,22 @@ apis:
         url: https://razorpay.com/docs/webhooks/payloads/
 
 common:
+  - type: Sandbox
+    url: sandbox/razorpay-sandbox.yml
+  - type: Conventions
+    url: conventions/razorpay-conventions.yml
+  - type: ChangeLog
+    url: changelog/razorpay-changelog.yml
+  - type: Components
+    url: components/razorpay-components.yml
+  - type: DataModel
+    url: data-model/razorpay-data-model.yml
+  - type: DeclineCodes
+    url: errors/razorpay-decline-codes.yml
+  - type: TrustCenter
+    url: security/razorpay-trust-center.yml
+  - type: OAuthScopes
+    url: scopes/razorpay-scopes.yml
   - type: VulnerabilityDisclosure
     url: security/razorpay-vulnerability-disclosure.yml
   - type: DomainSecurity

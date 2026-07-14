@@ -1,0 +1,36 @@
+generated: '2026-07-14'
+method: searched
+source: https://razorpay.com/docs/partners/technology-partners/onboard-businesses/integrate-oauth/integration-steps/
+docs: https://razorpay.com/docs/partners/technology-partners/onboard-businesses/integrate-oauth/
+description: >-
+  Razorpay's OAuth 2.0 scopes. The core Razorpay API authenticates with HTTP
+  Basic key_id/key_secret, not OAuth, so the OpenAPI securitySchemes carry no
+  oauth2 scopes. OAuth is used by Razorpay Partners (technology partners /
+  aggregators) to obtain access tokens acting on onboarded merchant accounts,
+  and by the Razorpay MCP server. This is the searched fill capturing the
+  partner OAuth scope surface. Multiple scopes are requested with array notation
+  (scope[]=read_only&scope[]=rx_read_write).
+schemes:
+  - name: Razorpay Partner OAuth
+    type: oauth2
+    grant_types: [authorization_code, refresh_token]
+    response_type: code
+    authorizationUrl: https://auth.razorpay.com/authorize
+    tokenUrl: https://auth.razorpay.com/token
+    docs: https://razorpay.com/docs/partners/technology-partners/onboard-businesses/integrate-oauth/integration-steps/
+scopes:
+  - scope: read_only
+    description: Read access to all resources (all GET API requests) — view payments, refunds, etc.
+    schemes: [Razorpay Partner OAuth]
+  - scope: read_write
+    description: Read and write access to all resources — view and create payments, refunds, etc.
+    schemes: [Razorpay Partner OAuth]
+  - scope: rx_read_only
+    description: Read access to all RazorpayX resources (all GET requests) — view payouts, contacts, etc.
+    schemes: [Razorpay Partner OAuth]
+  - scope: rx_read_write
+    description: Read and write access to all RazorpayX resources — view and create payouts, contacts, etc.
+    schemes: [Razorpay Partner OAuth]
+  - scope: rx_partner_read_write
+    description: Fetch payouts, contacts, fund accounts, transactions, and approve or reject a payout.
+    schemes: [Razorpay Partner OAuth]

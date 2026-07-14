@@ -1,0 +1,34 @@
+generated: '2026-07-14'
+method: searched
+source: https://razorpay.com/docs/payments/payment-gateway/web-integration/
+description: >-
+  Razorpay's client-side / embeddable UI surfaces — the checkout and no-code
+  components that render the payment UX in the browser or app, distinct from the
+  server-side SDK client libraries. Grouped by family: the Checkout integrations
+  (loaded via checkout.js), no-code hosted/embeddable surfaces (Payment Pages,
+  Payment Links, Payment Button), and the Magic one-click checkout.
+docs:
+  - https://razorpay.com/docs/payments/payment-gateway/web-integration/standard/
+  - https://razorpay.com/docs/payments/payment-button/
+  - https://razorpay.com/docs/payments/payment-pages/
+libraries:
+  - {name: checkout.js, url: 'https://checkout.razorpay.com/v1/checkout.js', purpose: Loads and mounts the Razorpay Checkout modal in the browser.}
+
+families:
+  checkout:
+    description: >-
+      The Razorpay Checkout modal that collects the payment method and completes
+      the payment against an order. Loaded via checkout.js and opened with a
+      new Razorpay(options) instance.
+    components:
+      - {name: Standard Checkout, description: Razorpay-hosted prebuilt modal (checkout.js) rendering all enabled payment methods over an order.}
+      - {name: Custom Checkout, description: Build your own UI and drive the payment through Razorpay's JS APIs while Razorpay handles PCI-scoped fields.}
+      - {name: Hosted Checkout, description: Razorpay-hosted redirect payment page (no front-end code required).}
+      - {name: Magic Checkout, description: One-click checkout with saved addresses, cards, and UPI to lift conversion.}
+  no_code:
+    description: No-code embeddable/hosted surfaces for collecting payments without a full integration.
+    components:
+      - {name: Payment Button, description: Embeddable no-code button (<script> snippet) that opens Checkout for a fixed or customer-entered amount.}
+      - {name: Payment Pages, description: Razorpay-hosted no-code storefront/donation/collection pages.}
+      - {name: Payment Links, description: Shareable hosted payment URL; also a first-class API object.}
+      - {name: Subscription Button / Pages, description: No-code recurring-billing collection surfaces.}

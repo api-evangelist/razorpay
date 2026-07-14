@@ -1,0 +1,56 @@
+generated: '2026-07-14'
+method: derived
+source: >-
+  Derived from openapi/razorpay-openapi.yml (Order/Payment/Refund/Card schemas
+  and the order_id / payment_id reference fields) and the Razorpay API object
+  reference (razorpay.com/docs/api) searched for id-prefixes and the broader
+  domain (customers, tokens, invoices, payment links, subscriptions, plans,
+  settlements, transfers/Route, virtual accounts, and RazorpayX payouts).
+docs: https://razorpay.com/docs/api/
+notation: >-
+  relationships use has_one / has_many / belongs_to with the foreign-key field
+  name; direction is from the entity that owns the reference.
+
+entities:
+  - {name: Order, id_prefix: order_, domain: payments, description: An intent-to-pay wrapper a client-side payment is created against.}
+  - {name: Payment, id_prefix: pay_, domain: payments, description: A single payment attempt against an order.}
+  - {name: Refund, id_prefix: rfnd_, domain: payments, description: A full or partial reversal of a captured payment.}
+  - {name: Card, id_prefix: card_, domain: payments, description: The card instrument used for a payment (expanded sub-entity).}
+  - {name: Customer, id_prefix: cust_, domain: core, description: A saved customer you bill and tokenize instruments for.}
+  - {name: Token, id_prefix: token_, domain: payments, description: A saved/tokenized payment instrument or mandate for a customer.}
+  - {name: Invoice, id_prefix: inv_, domain: billing, description: A statement of amounts owed, optionally linked to a subscription.}
+  - {name: PaymentLink, id_prefix: plink_, domain: payments, description: A shareable hosted payment URL.}
+  - {name: Plan, id_prefix: plan_, domain: subscriptions, description: A recurring pricing definition.}
+  - {name: Subscription, id_prefix: sub_, domain: subscriptions, description: A recurring billing agreement for a customer against a plan.}
+  - {name: Offer, id_prefix: offer_, domain: payments, description: A discount/cashback offer applicable to payments.}
+  - {name: Settlement, id_prefix: setl_, domain: money-movement, description: Payout of collected funds from the Razorpay balance to the merchant bank account.}
+  - {name: Transfer, id_prefix: trf_, domain: route, description: A Route split of a payment to a linked account.}
+  - {name: VirtualAccount, id_prefix: va_, domain: smart-collect, description: A virtual account / UPI ID for reconciling bank-transfer collections.}
+  - {name: Payout, id_prefix: pout_, domain: razorpayx, description: An outgoing RazorpayX payment to a fund account.}
+  - {name: Contact, id_prefix: cont_, domain: razorpayx, description: A payee (vendor/employee/customer) for RazorpayX payouts.}
+  - {name: FundAccount, id_prefix: fa_, domain: razorpayx, description: A bank account or VPA destination belonging to a contact.}
+  - {name: Dispute, id_prefix: disp_, domain: payments, description: A chargeback/dispute raised against a payment.}
+
+relationships:
+  - {from: Order, to: Payment, kind: has_many, via: order_id}
+  - {from: Payment, to: Order, kind: belongs_to, via: order_id}
+  - {from: Payment, to: Refund, kind: has_many, via: payment_id}
+  - {from: Payment, to: Card, kind: has_one, via: card_id}
+  - {from: Payment, to: Transfer, kind: has_many, via: payment_id}
+  - {from: Payment, to: Dispute, kind: has_one, via: payment_id}
+  - {from: Refund, to: Payment, kind: belongs_to, via: payment_id}
+  - {from: Customer, to: Token, kind: has_many, via: customer_id}
+  - {from: Token, to: Customer, kind: belongs_to, via: customer_id}
+  - {from: Subscription, to: Plan, kind: belongs_to, via: plan_id}
+  - {from: Subscription, to: Customer, kind: belongs_to, via: customer_id}
+  - {from: Subscription, to: Invoice, kind: has_many, via: subscription_id}
+  - {from: Invoice, to: Customer, kind: belongs_to, via: customer_id}
+  - {from: Invoice, to: Payment, kind: has_one, via: payment_id}
+  - {from: PaymentLink, to: Payment, kind: has_many, via: payment_link_id}
+  - {from: Transfer, to: Payment, kind: belongs_to, via: source}
+  - {from: VirtualAccount, to: Payment, kind: has_many, via: virtual_account_id}
+  - {from: Payout, to: FundAccount, kind: belongs_to, via: fund_account_id}
+  - {from: FundAccount, to: Contact, kind: belongs_to, via: contact_id}
+  - {from: Contact, to: FundAccount, kind: has_many, via: contact_id}
+
+interchange_hubs: [Payment, Order, Customer]

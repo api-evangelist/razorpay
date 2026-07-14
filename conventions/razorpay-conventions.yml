@@ -1,0 +1,97 @@
+generated: '2026-07-14'
+method: searched
+source: >-
+  https://razorpay.com/docs/api/understand/ and https://razorpay.com/docs/api/errors/
+  — the cross-cutting request/response conventions that apply to every Razorpay
+  endpoint, captured from the docs and derived from openapi/razorpay-openapi.yml.
+description: >-
+  How Razorpay's REST API behaves across every operation: authentication style,
+  idempotency, pagination, field expansion, amounts/timestamps, request tracing,
+  versioning, error envelope, and rate-limit signaling — the developer-experience
+  / runtime-semantics conventions OpenAPI does not fully express.
+docs:
+  - https://razorpay.com/docs/api/understand/
+  - https://razorpay.com/docs/api/pagination/
+  - https://razorpay.com/docs/api/errors/
+
+base_url: https://api.razorpay.com/v1
+api_style: REST over HTTPS, JSON request and response bodies, standard HTTP status semantics.
+
+authentication:
+  scheme: HTTP Basic — key_id as username, key_secret as password.
+  key_modes: [rzp_test_ (test), rzp_live_ (live)]
+  docs: https://razorpay.com/docs/api/authentication/
+  detail: authentication/razorpay-authentication.yml
+
+idempotency:
+  supported: true
+  scope: RazorpayX Payouts (the payout API)
+  mechanism: X-Payout-Idempotency request header
+  key_format: 4-36 characters; alphabets, numbers, hyphens, underscores and space only.
+  description: >-
+    A payout request carrying the same idempotency key returns the original
+    payout rather than creating a duplicate. Core payments dedupe on order-level
+    receipt/order_id rather than a generic idempotency header.
+  docs: https://razorpay.com/docs/api/x/payout-idempotency/
+
+pagination:
+  style: offset
+  request_params:
+    count: Number of entities to fetch. Default 10, maximum 100.
+    skip: Number of entities to skip. Default 0. Used with count.
+    from: Unix timestamp — entities created after this time.
+    to: Unix timestamp — entities created before this time.
+  response_fields:
+    entity: collection — indicates a list response.
+    count: integer — number of items in the page.
+    items: array — the list of entity objects.
+  docs: https://razorpay.com/docs/api/pagination/
+
+field_expansion:
+  supported: true
+  mechanism: expand[] query parameter (repeatable)
+  values: [card, emi, transaction, refunds, offers, token, transaction.settlement]
+  description: >-
+    Related sub-entities are returned as ids/omitted by default; expand[] inlines
+    the full sub-object into the response.
+  docs: https://razorpay.com/docs/api/payments/fetch-all-payments-with-expanded-emi-details/
+
+notes_metadata:
+  supported: true
+  mechanism: notes[key]=value on most objects (orders, payments, links, subscriptions, etc.)
+  description: Arbitrary key-value store attached to objects and echoed in responses and webhook payloads.
+
+amounts:
+  detail: Integer minor units — paise for INR (e.g. 50000 = ₹500.00).
+  currency: Three-letter ISO currency code accompanies the amount.
+
+timestamps:
+  detail: Unix epoch seconds (UTC).
+
+entity_envelope:
+  every_object_has: [entity (type string), id (unique identifier)]
+
+error_envelope:
+  media_type: application/json
+  rfc9457: false
+  shape: '{ "error": { "code", "description", "field", "source", "step", "reason", "metadata" } }'
+  code_classes: [BAD_REQUEST_ERROR, GATEWAY_ERROR, SERVER_ERROR]
+  source_values: [customer, business, bank, gateway]
+  detail: errors/razorpay-decline-codes.yml
+  docs: https://razorpay.com/docs/api/errors/
+
+webhooks:
+  signing_header: X-Razorpay-Signature
+  verification: HMAC-SHA256 hex digest of the raw request body using the webhook secret.
+  detail: asyncapi/razorpay-webhooks-asyncapi.yml
+  docs: https://razorpay.com/docs/webhooks/
+
+rate_limits:
+  signal_status: 429
+  note: Razorpay applies per-key rate limits; exceeding them returns HTTP 429.
+
+other_conventions:
+  - name: Test vs live mode
+    detail: Separated by API key mode (rzp_test_ / rzp_live_); see sandbox/razorpay-sandbox.yml.
+  - name: Partner OAuth
+    detail: Partners act on merchant accounts via OAuth access tokens; see scopes/razorpay-scopes.yml.

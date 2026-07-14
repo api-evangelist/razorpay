@@ -1,0 +1,31 @@
+generated: '2026-07-14'
+method: searched
+source: https://razorpay.com/docs/api/changelog/
+description: >-
+  Structured capture of Razorpay's API changelog. Razorpay runs a single,
+  continuously-versioned REST API (v1 with select v2 resources) rather than
+  pinned dated API versions — changes are additive and published in a running
+  dated changelog (recording changes since Jan 2024). Clients do not send a
+  version header. This artifact records the recent highlights; the live changelog
+  is the source of truth.
+docs:
+  - https://razorpay.com/docs/api/changelog/
+  - https://razorpay.com/docs/partners/changelog/
+versioning:
+  scheme: continuous / additive (no per-request API version header)
+  paths: [v1 (primary), v2 (select resources)]
+  changelog_since: '2024-01'
+  header: none
+entries:
+  - year: '2026'
+    highlights:
+      - Support for 8- and 9-digit bank identification numbers (BIN) for more accurate card routing and fewer declines.
+      - Auto-debit limit for card mandates increased up to ₹1 lakh for high-value recurring payments.
+      - Cancel UPI mandates in real time via API so refunds are processed faster.
+  - year: '2025'
+    highlights:
+      - Continued additive changes to orders, payments, refunds, subscriptions, payment links, and RazorpayX payout resources (see live changelog for dated detail).
+note: >-
+  Precise per-change dates are maintained in the live changelog table and were
+  not captured verbatim here to avoid fabricating dates; only confirmed recent
+  highlights are recorded.

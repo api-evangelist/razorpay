@@ -1,0 +1,31 @@
+generated: '2026-07-14'
+method: searched
+probe: false
+source: https://razorpay.com/docs/security/
+url: https://razorpay.com/docs/security/
+description: >-
+  Razorpay's security & compliance posture, captured from razorpay.com/docs/security
+  and the published PCI DSS certificate. Razorpay is a PCI-DSS certified payment
+  service provider handling cardholder data, with its cardholder data environment
+  assessed by an external QSA (Ampcus Cyber). Compliance program covers PCI-DSS,
+  ISO 27001, and SOC 2. Certificate copies are provided on request via a Key
+  Account Manager, so the automated trust-center probe (which requires a
+  trust.<domain> subdomain and keyword threshold) does not record it — this is
+  the searched, human-verified fill.
+certifications:
+  - {name: PCI DSS, scope: Payment service provider — cardholder data environment, assessor: Ampcus Cyber Inc. (QSA), note: Certificate published; copies available on request.}
+  - {name: ISO 27001, note: Information security management system compliance.}
+  - {name: SOC 2, note: Part of Razorpay's stated global compliance program.}
+data_protection:
+  transport: HTTPS/TLS with industry-standard ciphers; EV SSL certificate.
+  encryption_at_rest: AES-128-bit encryption for user data.
+  pii: Field-level encryption for personally identifiable information.
+report_access:
+  method: Certification copies provided on request via a Key Account Manager.
+docs:
+  - https://razorpay.com/docs/security/
+  - https://razorpay.com/docs/security/shared-responsibility-model/
+  - https://razorpay.com/docs/build/browser/assets/images/pci-dss-us.pdf
+evidence:
+  - {source: https://razorpay.com/docs/security/, keywords: [pci-dss, tls, aes-128, ev ssl, field-level encryption]}
+  - {source: https://www.ampcuscyber.com/certificate/razorpay-pci-dss-coc.pdf, kind: pci-dss-certificate}
