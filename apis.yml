@@ -95,6 +95,8 @@ apis:
         url: https://razorpay.com/docs/webhooks/payloads/
 
 common:
+  - type: AgenticAccess
+    url: agentic-access/razorpay-agentic-access.yml
   - type: Sandbox
     url: sandbox/razorpay-sandbox.yml
   - type: Conventions
