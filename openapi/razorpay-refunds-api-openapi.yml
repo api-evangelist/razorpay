@@ -1,0 +1,159 @@
+openapi: 3.1.0
+info:
+  title: Razorpay Core REST Orders Refunds API
+  description: 'Razorpay''s RESTful API covering orders, payments, and refunds. All
+
+    endpoints are authenticated with HTTP Basic auth using the API
+
+    key_id as username and key_secret as password and return JSON.
+
+    '
+  version: 1.0.0
+  contact:
+    name: Razorpay
+    url: https://razorpay.com/docs/api/
+servers:
+- url: https://api.razorpay.com/v1
+  description: Razorpay production API
+security:
+- basicAuth: []
+tags:
+- name: Refunds
+paths:
+  /refunds:
+    get:
+      summary: List all refunds
+      operationId: listRefunds
+      parameters:
+      - $ref: '#/components/parameters/from'
+      - $ref: '#/components/parameters/to'
+      - $ref: '#/components/parameters/count'
+      - $ref: '#/components/parameters/skip'
+      responses:
+        '200':
+          description: Refund list.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefundList'
+      tags:
+      - Refunds
+  /refunds/{id}:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    get:
+      summary: Get a refund
+      operationId: getRefund
+      responses:
+        '200':
+          description: Refund detail.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Refund'
+      tags:
+      - Refunds
+    patch:
+      summary: Update refund notes
+      operationId: updateRefund
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                notes:
+                  type: object
+                  additionalProperties:
+                    type: string
+      responses:
+        '200':
+          description: Updated refund.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Refund'
+      tags:
+      - Refunds
+components:
+  parameters:
+    skip:
+      name: skip
+      in: query
+      schema:
+        type: integer
+        default: 0
+    from:
+      name: from
+      in: query
+      schema:
+        type: integer
+        description: Unix timestamp (seconds) lower bound.
+    id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    to:
+      name: to
+      in: query
+      schema:
+        type: integer
+        description: Unix timestamp (seconds) upper bound.
+    count:
+      name: count
+      in: query
+      schema:
+        type: integer
+        default: 10
+        maximum: 100
+  schemas:
+    RefundList:
+      type: object
+      properties:
+        entity:
+          type: string
+        count:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Refund'
+    Refund:
+      type: object
+      properties:
+        id:
+          type: string
+        entity:
+          type: string
+        amount:
+          type: integer
+        currency:
+          type: string
+        payment_id:
+          type: string
+        receipt:
+          type: string
+        status:
+          type: string
+          enum:
+          - pending
+          - processed
+          - failed
+        speed_requested:
+          type: string
+        speed_processed:
+          type: string
+        created_at:
+          type: integer
+        notes:
+          type: object
+          additionalProperties:
+            type: string
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic auth — username is Razorpay key_id, password is key_secret.

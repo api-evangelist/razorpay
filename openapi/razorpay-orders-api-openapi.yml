@@ -1,0 +1,297 @@
+openapi: 3.1.0
+info:
+  title: Razorpay Core REST Orders API
+  description: 'Razorpay''s RESTful API covering orders, payments, and refunds. All
+
+    endpoints are authenticated with HTTP Basic auth using the API
+
+    key_id as username and key_secret as password and return JSON.
+
+    '
+  version: 1.0.0
+  contact:
+    name: Razorpay
+    url: https://razorpay.com/docs/api/
+servers:
+- url: https://api.razorpay.com/v1
+  description: Razorpay production API
+security:
+- basicAuth: []
+tags:
+- name: Orders
+paths:
+  /orders:
+    post:
+      summary: Create an order
+      operationId: createOrder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderRequest'
+      responses:
+        '200':
+          description: Order created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+      tags:
+      - Orders
+    get:
+      summary: List orders
+      operationId: listOrders
+      parameters:
+      - $ref: '#/components/parameters/from'
+      - $ref: '#/components/parameters/to'
+      - $ref: '#/components/parameters/count'
+      - $ref: '#/components/parameters/skip'
+      - name: authorized
+        in: query
+        schema:
+          type: integer
+          enum:
+          - 0
+          - 1
+      - name: receipt
+        in: query
+        schema:
+          type: string
+      - name: expand[]
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Order list.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderList'
+      tags:
+      - Orders
+  /orders/{id}:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    get:
+      summary: Get an order
+      operationId: getOrder
+      responses:
+        '200':
+          description: Order detail.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+      tags:
+      - Orders
+    patch:
+      summary: Update an order
+      operationId: updateOrder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                notes:
+                  type: object
+                  additionalProperties:
+                    type: string
+      responses:
+        '200':
+          description: Updated order.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+      tags:
+      - Orders
+  /orders/{id}/payments:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    get:
+      summary: Get payments for an order
+      operationId: getOrderPayments
+      responses:
+        '200':
+          description: Payments for the order.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentList'
+      tags:
+      - Orders
+components:
+  parameters:
+    skip:
+      name: skip
+      in: query
+      schema:
+        type: integer
+        default: 0
+    from:
+      name: from
+      in: query
+      schema:
+        type: integer
+        description: Unix timestamp (seconds) lower bound.
+    id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    to:
+      name: to
+      in: query
+      schema:
+        type: integer
+        description: Unix timestamp (seconds) upper bound.
+    count:
+      name: count
+      in: query
+      schema:
+        type: integer
+        default: 10
+        maximum: 100
+  schemas:
+    OrderRequest:
+      type: object
+      required:
+      - amount
+      - currency
+      properties:
+        amount:
+          type: integer
+          description: Amount in smallest currency sub-unit (paise for INR).
+        currency:
+          type: string
+          description: ISO 4217 currency code.
+        receipt:
+          type: string
+        notes:
+          type: object
+          additionalProperties:
+            type: string
+        partial_payment:
+          type: boolean
+        payment_capture:
+          type: boolean
+    PaymentList:
+      type: object
+      properties:
+        entity:
+          type: string
+        count:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Payment'
+    Order:
+      type: object
+      properties:
+        id:
+          type: string
+        entity:
+          type: string
+        amount:
+          type: integer
+        amount_paid:
+          type: integer
+        amount_due:
+          type: integer
+        currency:
+          type: string
+        receipt:
+          type: string
+        status:
+          type: string
+          enum:
+          - created
+          - attempted
+          - paid
+        attempts:
+          type: integer
+        notes:
+          type: object
+          additionalProperties:
+            type: string
+        created_at:
+          type: integer
+    OrderList:
+      type: object
+      properties:
+        entity:
+          type: string
+        count:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Order'
+    Payment:
+      type: object
+      properties:
+        id:
+          type: string
+        entity:
+          type: string
+        amount:
+          type: integer
+        currency:
+          type: string
+        status:
+          type: string
+          enum:
+          - created
+          - authorized
+          - captured
+          - refunded
+          - failed
+        method:
+          type: string
+        order_id:
+          type: string
+        description:
+          type: string
+        international:
+          type: boolean
+        refund_status:
+          type:
+          - string
+          - 'null'
+        amount_refunded:
+          type: integer
+        captured:
+          type: boolean
+        email:
+          type: string
+        contact:
+          type: string
+        fee:
+          type: integer
+        tax:
+          type: integer
+        error_code:
+          type:
+          - string
+          - 'null'
+        error_description:
+          type:
+          - string
+          - 'null'
+        created_at:
+          type: integer
+        notes:
+          type: object
+          additionalProperties:
+            type: string
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic auth — username is Razorpay key_id, password is key_secret.
