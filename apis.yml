@@ -27,73 +27,99 @@ created: '2026-05-11'
 modified: '2026-05-30'
 specificationVersion: '0.19'
 apis:
-  - aid: razorpay:core-api
-    name: Razorpay Core REST API
-    description: >-
-      RESTful API covering orders, payments, refunds, customers, tokens,
-      invoices, payment links, virtual accounts, settlements, transfers,
-      subscriptions, and webhooks. Authentication is HTTP Basic using the
-      API key_id as username and key_secret as password; all endpoints
-      return JSON and follow standard HTTP semantics.
-    humanURL: https://razorpay.com/docs/api/
-    baseURL: https://api.razorpay.com/v1
-    tags:
-      - Payments
-      - REST API
-      - Basic Auth
-      - JSON
-    properties:
-      - type: Documentation
-        url: https://razorpay.com/docs/api/
-      - type: Authentication
-        url: https://razorpay.com/docs/api/authentication/
-      - type: PostmanCollection
-        url: https://www.postman.com/razorpaydev/razorpay-public-workspace/overview
-      - type: Webhooks
-        url: https://razorpay.com/docs/webhooks/
-      - type: ErrorCodes
-        url: https://razorpay.com/docs/errors/
-  - aid: razorpay:payments-api
-    name: Razorpay Payments API
-    description: >-
-      Subset of the core REST API focused on creating orders, capturing
-      authorized payments, fetching payment details, issuing refunds, and
-      retrieving transfers for split settlements between linked accounts.
-    humanURL: https://razorpay.com/docs/api/payments/
-    baseURL: https://api.razorpay.com/v1
-    tags:
-      - Payments
-      - Orders
-      - Refunds
-    properties:
-      - type: Documentation
-        url: https://razorpay.com/docs/api/payments/
-  - aid: razorpay:webhooks
-    name: Razorpay Webhooks
-    description: >-
-      Event-driven webhook surface that POSTs JSON payloads to a
-      merchant-configured HTTPS endpoint when subscribed events occur across
-      payments, orders, refunds, subscriptions, invoices, settlements, Smart
-      Collect virtual accounts, payment links, Route transfers, disputes, and
-      payment downtime advisories. Each delivery is signed with an
-      HMAC-SHA256 hex digest of the raw request body using the merchant's
-      webhook secret, transmitted via the X-Razorpay-Signature header.
-    humanURL: https://razorpay.com/docs/webhooks/
-    tags:
-      - Webhooks
-      - Events
-      - AsyncAPI
-      - HMAC-SHA256
-    properties:
-      - type: Documentation
-        url: https://razorpay.com/docs/webhooks/
-      - type: AsyncAPI
-        url: https://raw.githubusercontent.com/api-evangelist/razorpay/refs/heads/main/asyncapi/razorpay-webhooks-asyncapi.yml
-      - type: SignatureValidation
-        url: https://razorpay.com/docs/webhooks/validate-test/
-      - type: EventPayloads
-        url: https://razorpay.com/docs/webhooks/payloads/
-
+- aid: razorpay:core-api
+  name: Razorpay Core REST API
+  description: >-
+    RESTful API covering orders, payments, refunds, customers, tokens, invoices, payment links, virtual
+    accounts, settlements, transfers, subscriptions, and webhooks. Authentication is HTTP Basic using
+    the API key_id as username and key_secret as password; all endpoints return JSON and follow standard
+    HTTP semantics.
+  humanURL: https://razorpay.com/docs/api/
+  baseURL: https://api.razorpay.com/v1
+  tags:
+  - Payments
+  - REST API
+  - Basic Auth
+  - JSON
+  properties:
+  - type: Documentation
+    url: https://razorpay.com/docs/api/
+  - type: Authentication
+    url: https://razorpay.com/docs/api/authentication/
+  - type: PostmanCollection
+    url: https://www.postman.com/razorpaydev/razorpay-public-workspace/overview
+  - type: Webhooks
+    url: https://razorpay.com/docs/webhooks/
+  - type: ErrorCodes
+    url: https://razorpay.com/docs/errors/
+- aid: razorpay:payments-api
+  name: Razorpay Payments API
+  description: >-
+    Subset of the core REST API focused on creating orders, capturing authorized payments, fetching payment
+    details, issuing refunds, and retrieving transfers for split settlements between linked accounts.
+  humanURL: https://razorpay.com/docs/api/payments/
+  baseURL: https://api.razorpay.com/v1
+  tags:
+  - Payments
+  - Orders
+  - Refunds
+  properties:
+  - type: Documentation
+    url: https://razorpay.com/docs/api/payments/
+- aid: razorpay:webhooks
+  name: Razorpay Webhooks
+  description: >-
+    Event-driven webhook surface that POSTs JSON payloads to a merchant-configured HTTPS endpoint when
+    subscribed events occur across payments, orders, refunds, subscriptions, invoices, settlements, Smart
+    Collect virtual accounts, payment links, Route transfers, disputes, and payment downtime advisories.
+    Each delivery is signed with an HMAC-SHA256 hex digest of the raw request body using the merchant's
+    webhook secret, transmitted via the X-Razorpay-Signature header.
+  humanURL: https://razorpay.com/docs/webhooks/
+  tags:
+  - Webhooks
+  - Events
+  - AsyncAPI
+  - HMAC-SHA256
+  properties:
+  - type: Documentation
+    url: https://razorpay.com/docs/webhooks/
+  - type: AsyncAPI
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/razorpay/refs/heads/main/asyncapi/razorpay-webhooks-asyncapi.yml
+  - type: SignatureValidation
+    url: https://razorpay.com/docs/webhooks/validate-test/
+  - type: EventPayloads
+    url: https://razorpay.com/docs/webhooks/payloads/
+- aid: razorpay:razorpay-orders-api
+  name: Razorpay Orders API
+  description: The Orders API from Razorpay — 3 operation(s) for orders.
+  humanURL: https://razorpay.com/docs/api/
+  baseURL: https://api.razorpay.com/v1
+  tags:
+  - Orders
+  properties:
+  - type: OpenAPI
+    url: openapi/razorpay-orders-api-openapi.yml
+- aid: razorpay:razorpay-payments-api
+  name: Razorpay Payments API
+  description: The Payments API from Razorpay — 6 operation(s) for payments.
+  humanURL: https://razorpay.com/docs/api/
+  baseURL: https://api.razorpay.com/v1
+  tags:
+  - Payments
+  properties:
+  - type: OpenAPI
+    url: openapi/razorpay-payments-api-openapi.yml
+- aid: razorpay:razorpay-refunds-api
+  name: Razorpay Refunds API
+  description: The Refunds API from Razorpay — 2 operation(s) for refunds.
+  humanURL: https://razorpay.com/docs/api/
+  baseURL: https://api.razorpay.com/v1
+  tags:
+  - Refunds
+  properties:
+  - type: OpenAPI
+    url: openapi/razorpay-refunds-api-openapi.yml
 common:
   - type: AgentCard
     url: a2a/razorpay-a2a.yml
