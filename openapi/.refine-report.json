@@ -1,0 +1,18 @@
+{
+  "provider": "razorpay",
+  "sources": [
+    "razorpay-orders-api-openapi.yml",
+    "razorpay-payments-api-openapi.yml",
+    "razorpay-refunds-api-openapi.yml"
+  ],
+  "outputs": [
+    "razorpay-orders-api-openapi.yml",
+    "razorpay-payments-api-openapi.yml",
+    "razorpay-refunds-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

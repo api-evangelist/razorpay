@@ -1,0 +1,507 @@
+openapi: 3.1.0
+info:
+  title: Razorpay Core REST API
+  description: |
+    Razorpay's RESTful API covering orders, payments, and refunds. All
+    endpoints are authenticated with HTTP Basic auth using the API
+    key_id as username and key_secret as password and return JSON.
+  version: "1.0.0"
+  contact:
+    name: Razorpay
+    url: https://razorpay.com/docs/api/
+servers:
+  - url: https://api.razorpay.com/v1
+    description: Razorpay production API
+security:
+  - basicAuth: []
+paths:
+  /orders:
+    post:
+      summary: Create an order
+      operationId: createOrder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderRequest'
+      responses:
+        '200':
+          description: Order created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+    get:
+      summary: List orders
+      operationId: listOrders
+      parameters:
+        - $ref: '#/components/parameters/from'
+        - $ref: '#/components/parameters/to'
+        - $ref: '#/components/parameters/count'
+        - $ref: '#/components/parameters/skip'
+        - name: authorized
+          in: query
+          schema:
+            type: integer
+            enum: [0, 1]
+        - name: receipt
+          in: query
+          schema:
+            type: string
+        - name: 'expand[]'
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Order list.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderList'
+  /orders/{id}:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    get:
+      summary: Get an order
+      operationId: getOrder
+      responses:
+        '200':
+          description: Order detail.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+    patch:
+      summary: Update an order
+      operationId: updateOrder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                notes:
+                  type: object
+                  additionalProperties:
+                    type: string
+      responses:
+        '200':
+          description: Updated order.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+  /orders/{id}/payments:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    get:
+      summary: Get payments for an order
+      operationId: getOrderPayments
+      responses:
+        '200':
+          description: Payments for the order.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentList'
+  /payments:
+    get:
+      summary: List payments
+      operationId: listPayments
+      parameters:
+        - $ref: '#/components/parameters/from'
+        - $ref: '#/components/parameters/to'
+        - $ref: '#/components/parameters/count'
+        - $ref: '#/components/parameters/skip'
+      responses:
+        '200':
+          description: Payment list.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentList'
+  /payments/{id}:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    get:
+      summary: Get a payment
+      operationId: getPayment
+      responses:
+        '200':
+          description: Payment detail.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+    patch:
+      summary: Update a payment (notes)
+      operationId: updatePayment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                notes:
+                  type: object
+                  additionalProperties:
+                    type: string
+      responses:
+        '200':
+          description: Updated payment.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+  /payments/{id}/capture:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    post:
+      summary: Capture an authorized payment
+      operationId: capturePayment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [amount, currency]
+              properties:
+                amount:
+                  type: integer
+                  description: Amount in the smallest currency sub-unit (paise for INR).
+                currency:
+                  type: string
+                  description: ISO currency code, e.g. INR.
+      responses:
+        '200':
+          description: Captured payment.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+  /payments/{id}/card:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    get:
+      summary: Get card used for a payment
+      operationId: getPaymentCard
+      responses:
+        '200':
+          description: Card detail.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  entity:
+                    type: string
+                  name:
+                    type: string
+                  last4:
+                    type: string
+                  network:
+                    type: string
+                  type:
+                    type: string
+                  issuer:
+                    type: string
+                  international:
+                    type: boolean
+                  emi:
+                    type: boolean
+  /payments/{id}/refund:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    post:
+      summary: Refund a captured payment
+      operationId: createRefund
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: integer
+                  description: Amount to refund in smallest currency sub-unit. Omit for full refund.
+                speed:
+                  type: string
+                  enum: [normal, optimum]
+                notes:
+                  type: object
+                  additionalProperties:
+                    type: string
+                receipt:
+                  type: string
+      responses:
+        '200':
+          description: Refund created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Refund'
+  /payments/{id}/refunds:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    get:
+      summary: List refunds for a payment
+      operationId: listPaymentRefunds
+      responses:
+        '200':
+          description: Refund list.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefundList'
+  /refunds:
+    get:
+      summary: List all refunds
+      operationId: listRefunds
+      parameters:
+        - $ref: '#/components/parameters/from'
+        - $ref: '#/components/parameters/to'
+        - $ref: '#/components/parameters/count'
+        - $ref: '#/components/parameters/skip'
+      responses:
+        '200':
+          description: Refund list.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefundList'
+  /refunds/{id}:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    get:
+      summary: Get a refund
+      operationId: getRefund
+      responses:
+        '200':
+          description: Refund detail.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Refund'
+    patch:
+      summary: Update refund notes
+      operationId: updateRefund
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                notes:
+                  type: object
+                  additionalProperties:
+                    type: string
+      responses:
+        '200':
+          description: Updated refund.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Refund'
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic auth — username is Razorpay key_id, password is key_secret.
+  parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    from:
+      name: from
+      in: query
+      schema:
+        type: integer
+        description: Unix timestamp (seconds) lower bound.
+    to:
+      name: to
+      in: query
+      schema:
+        type: integer
+        description: Unix timestamp (seconds) upper bound.
+    count:
+      name: count
+      in: query
+      schema:
+        type: integer
+        default: 10
+        maximum: 100
+    skip:
+      name: skip
+      in: query
+      schema:
+        type: integer
+        default: 0
+  schemas:
+    OrderRequest:
+      type: object
+      required: [amount, currency]
+      properties:
+        amount:
+          type: integer
+          description: Amount in smallest currency sub-unit (paise for INR).
+        currency:
+          type: string
+          description: ISO 4217 currency code.
+        receipt:
+          type: string
+        notes:
+          type: object
+          additionalProperties:
+            type: string
+        partial_payment:
+          type: boolean
+        payment_capture:
+          type: boolean
+    Order:
+      type: object
+      properties:
+        id:
+          type: string
+        entity:
+          type: string
+        amount:
+          type: integer
+        amount_paid:
+          type: integer
+        amount_due:
+          type: integer
+        currency:
+          type: string
+        receipt:
+          type: string
+        status:
+          type: string
+          enum: [created, attempted, paid]
+        attempts:
+          type: integer
+        notes:
+          type: object
+          additionalProperties:
+            type: string
+        created_at:
+          type: integer
+    OrderList:
+      type: object
+      properties:
+        entity:
+          type: string
+        count:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Order'
+    Payment:
+      type: object
+      properties:
+        id:
+          type: string
+        entity:
+          type: string
+        amount:
+          type: integer
+        currency:
+          type: string
+        status:
+          type: string
+          enum: [created, authorized, captured, refunded, failed]
+        method:
+          type: string
+        order_id:
+          type: string
+        description:
+          type: string
+        international:
+          type: boolean
+        refund_status:
+          type: [string, "null"]
+        amount_refunded:
+          type: integer
+        captured:
+          type: boolean
+        email:
+          type: string
+        contact:
+          type: string
+        fee:
+          type: integer
+        tax:
+          type: integer
+        error_code:
+          type: [string, "null"]
+        error_description:
+          type: [string, "null"]
+        created_at:
+          type: integer
+        notes:
+          type: object
+          additionalProperties:
+            type: string
+    PaymentList:
+      type: object
+      properties:
+        entity:
+          type: string
+        count:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Payment'
+    Refund:
+      type: object
+      properties:
+        id:
+          type: string
+        entity:
+          type: string
+        amount:
+          type: integer
+        currency:
+          type: string
+        payment_id:
+          type: string
+        receipt:
+          type: string
+        status:
+          type: string
+          enum: [pending, processed, failed]
+        speed_requested:
+          type: string
+        speed_processed:
+          type: string
+        created_at:
+          type: integer
+        notes:
+          type: object
+          additionalProperties:
+            type: string
+    RefundList:
+      type: object
+      properties:
+        entity:
+          type: string
+        count:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Refund'
