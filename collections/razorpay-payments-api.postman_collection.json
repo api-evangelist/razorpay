@@ -1,0 +1,787 @@
+{
+  "item": [
+    {
+      "id": "ca324435-7690-46a7-922b-f90310ad43dd",
+      "name": "Payments",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "bf27c6bb-578d-4b87-a728-b709b6610292",
+          "name": "List payments",
+          "request": {
+            "name": "List payments",
+            "description": {},
+            "url": {
+              "path": [
+                "payments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "to",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "count",
+                  "value": "10"
+                },
+                {
+                  "disabled": false,
+                  "key": "skip",
+                  "value": "0"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f4186662-0e49-4b19-9383-f80544dfff09",
+              "name": "Payment list.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "count",
+                      "value": "10"
+                    },
+                    {
+                      "key": "skip",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"entity\": \"string\",\n  \"count\": 1414,\n  \"items\": [\n    {\n      \"id\": \"string\",\n      \"entity\": \"string\",\n      \"amount\": 3071,\n      \"currency\": \"string\",\n      \"status\": \"refunded\",\n      \"method\": \"string\",\n      \"order_id\": \"string\",\n      \"description\": \"string\",\n      \"international\": false,\n      \"refund_status\": \"string\",\n      \"amount_refunded\": 9883,\n      \"captured\": false,\n      \"email\": \"string\",\n      \"contact\": \"string\",\n      \"fee\": 4083,\n      \"tax\": 9788,\n      \"error_code\": \"string\",\n      \"error_description\": \"string\",\n      \"created_at\": 3125,\n      \"notes\": {\n        \"key_0\": \"string\"\n      }\n    },\n    {\n      \"id\": \"string\",\n      \"entity\": \"string\",\n      \"amount\": 8263,\n      \"currency\": \"string\",\n      \"status\": \"refunded\",\n      \"method\": \"string\",\n      \"order_id\": \"string\",\n      \"description\": \"string\",\n      \"international\": true,\n      \"refund_status\": \"string\",\n      \"amount_refunded\": 3801,\n      \"captured\": true,\n      \"email\": \"string\",\n      \"contact\": \"string\",\n      \"fee\": 1176,\n      \"tax\": 7548,\n      \"error_code\": \"string\",\n      \"error_description\": \"string\",\n      \"created_at\": 6165,\n      \"notes\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "edfb24ca-1301-490f-8e3a-caa4aa19183d",
+          "name": "Get a payment",
+          "request": {
+            "name": "Get a payment",
+            "description": {},
+            "url": {
+              "path": [
+                "payments",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "788255d6-5b94-414c-8a66-fd680a449ae0",
+              "name": "Payment detail.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"entity\": \"string\",\n  \"amount\": 1377,\n  \"currency\": \"string\",\n  \"status\": \"refunded\",\n  \"method\": \"string\",\n  \"order_id\": \"string\",\n  \"description\": \"string\",\n  \"international\": false,\n  \"refund_status\": \"string\",\n  \"amount_refunded\": 7905,\n  \"captured\": false,\n  \"email\": \"string\",\n  \"contact\": \"string\",\n  \"fee\": 8800,\n  \"tax\": 1499,\n  \"error_code\": \"string\",\n  \"error_description\": \"string\",\n  \"created_at\": 4033,\n  \"notes\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\",\n    \"key_2\": \"string\",\n    \"key_3\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3071ef5e-544c-4a52-a98e-88fe23f5a845",
+          "name": "Update a payment (notes)",
+          "request": {
+            "name": "Update a payment (notes)",
+            "description": {},
+            "url": {
+              "path": [
+                "payments",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"notes\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\",\n    \"key_3\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "33c94cb5-cc47-4eab-b09f-d5aac23b88de",
+              "name": "Updated payment.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"notes\": {\n    \"key_0\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"entity\": \"string\",\n  \"amount\": 1377,\n  \"currency\": \"string\",\n  \"status\": \"refunded\",\n  \"method\": \"string\",\n  \"order_id\": \"string\",\n  \"description\": \"string\",\n  \"international\": false,\n  \"refund_status\": \"string\",\n  \"amount_refunded\": 7905,\n  \"captured\": false,\n  \"email\": \"string\",\n  \"contact\": \"string\",\n  \"fee\": 8800,\n  \"tax\": 1499,\n  \"error_code\": \"string\",\n  \"error_description\": \"string\",\n  \"created_at\": 4033,\n  \"notes\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\",\n    \"key_2\": \"string\",\n    \"key_3\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "afdf6b1c-2a9e-4062-b060-62a296fa5148",
+          "name": "Capture an authorized payment",
+          "request": {
+            "name": "Capture an authorized payment",
+            "description": {},
+            "url": {
+              "path": [
+                "payments",
+                ":id",
+                "capture"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": \"<integer>\",\n  \"currency\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "af4f1ece-3451-428b-b5dc-1395b4dc88d0",
+              "name": "Captured payment.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":id",
+                    "capture"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": \"<integer>\",\n  \"currency\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"entity\": \"string\",\n  \"amount\": 1377,\n  \"currency\": \"string\",\n  \"status\": \"refunded\",\n  \"method\": \"string\",\n  \"order_id\": \"string\",\n  \"description\": \"string\",\n  \"international\": false,\n  \"refund_status\": \"string\",\n  \"amount_refunded\": 7905,\n  \"captured\": false,\n  \"email\": \"string\",\n  \"contact\": \"string\",\n  \"fee\": 8800,\n  \"tax\": 1499,\n  \"error_code\": \"string\",\n  \"error_description\": \"string\",\n  \"created_at\": 4033,\n  \"notes\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\",\n    \"key_2\": \"string\",\n    \"key_3\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8ad6a2de-23cb-42a5-87d0-c5e3130b6185",
+          "name": "Get card used for a payment",
+          "request": {
+            "name": "Get card used for a payment",
+            "description": {},
+            "url": {
+              "path": [
+                "payments",
+                ":id",
+                "card"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3836c19c-aaab-4c7f-965f-9b830a5257b6",
+              "name": "Card detail.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":id",
+                    "card"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"entity\": \"string\",\n  \"name\": \"string\",\n  \"last4\": \"string\",\n  \"network\": \"string\",\n  \"type\": \"string\",\n  \"issuer\": \"string\",\n  \"international\": true,\n  \"emi\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "66715181-d96f-4246-900f-1be67712b278",
+          "name": "Refund a captured payment",
+          "request": {
+            "name": "Refund a captured payment",
+            "description": {},
+            "url": {
+              "path": [
+                "payments",
+                ":id",
+                "refund"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": \"<integer>\",\n  \"speed\": \"<string>\",\n  \"notes\": {\n    \"key_0\": \"<string>\"\n  },\n  \"receipt\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "dd805578-4861-460e-a65b-879c71ffc6af",
+              "name": "Refund created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":id",
+                    "refund"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": \"<integer>\",\n  \"speed\": \"<string>\",\n  \"notes\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"receipt\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"entity\": \"string\",\n  \"amount\": 4015,\n  \"currency\": \"string\",\n  \"payment_id\": \"string\",\n  \"receipt\": \"string\",\n  \"status\": \"failed\",\n  \"speed_requested\": \"string\",\n  \"speed_processed\": \"string\",\n  \"created_at\": 6350,\n  \"notes\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "287d4dc4-658b-41d6-b4bd-ce16529ee6f6",
+          "name": "List refunds for a payment",
+          "request": {
+            "name": "List refunds for a payment",
+            "description": {},
+            "url": {
+              "path": [
+                "payments",
+                ":id",
+                "refunds"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "855ad3c0-ed9c-43e4-9fc3-fff384a9606b",
+              "name": "Refund list.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":id",
+                    "refunds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"entity\": \"string\",\n  \"count\": 8327,\n  \"items\": [\n    {\n      \"id\": \"string\",\n      \"entity\": \"string\",\n      \"amount\": 4072,\n      \"currency\": \"string\",\n      \"payment_id\": \"string\",\n      \"receipt\": \"string\",\n      \"status\": \"pending\",\n      \"speed_requested\": \"string\",\n      \"speed_processed\": \"string\",\n      \"created_at\": 9001,\n      \"notes\": {\n        \"key_0\": \"string\"\n      }\n    },\n    {\n      \"id\": \"string\",\n      \"entity\": \"string\",\n      \"amount\": 4785,\n      \"currency\": \"string\",\n      \"payment_id\": \"string\",\n      \"receipt\": \"string\",\n      \"status\": \"pending\",\n      \"speed_requested\": \"string\",\n      \"speed_processed\": \"string\",\n      \"created_at\": 4313,\n      \"notes\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.razorpay.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "283643c2-e67b-474a-ab1b-59d83aa42c4d",
+    "name": "Razorpay Core REST Orders Payments API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Razorpay's RESTful API covering orders, payments, and refunds. All\nendpoints are authenticated with HTTP Basic auth using the API\nkey_id as username and key_secret as password and return JSON.\n\n\nContact Support:\n Name: Razorpay",
+      "type": "text/plain"
+    }
+  }
+}
