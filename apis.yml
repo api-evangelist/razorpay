@@ -18,6 +18,15 @@ tags:
   - Fintech
   - India
   - UPI
+  - Subscription
+  - Payouts
+  - Checkout
+tags_raw:
+  - Payments
+  - Payment Gateway
+  - Fintech
+  - India
+  - UPI
   - Subscriptions
   - Payouts
   - Checkout
@@ -61,6 +70,10 @@ apis:
   baseURL: https://api.razorpay.com/v1
   tags:
   - Payments
+  - Order
+  - Refunds
+  tags_raw:
+  - Payments
   - Orders
   - Refunds
   properties:
@@ -76,6 +89,11 @@ apis:
     webhook secret, transmitted via the X-Razorpay-Signature header.
   humanURL: https://razorpay.com/docs/webhooks/
   tags:
+  - Webhook
+  - Event
+  - AsyncAPI
+  - HMAC-SHA256
+  tags_raw:
   - Webhooks
   - Events
   - AsyncAPI
@@ -96,6 +114,8 @@ apis:
   humanURL: https://razorpay.com/docs/api/
   baseURL: https://api.razorpay.com/v1
   tags:
+  - Order
+  tags_raw:
   - Orders
   properties:
   - type: OpenAPI
