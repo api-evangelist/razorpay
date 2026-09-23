@@ -1,9 +1,7 @@
 {
   "provider": "razorpay",
   "sources": [
-    "razorpay-orders-api-openapi.yml",
-    "razorpay-payments-api-openapi.yml",
-    "razorpay-refunds-api-openapi.yml"
+    "_original/razorpay-openapi.yml"
   ],
   "outputs": [
     "razorpay-orders-api-openapi.yml",
@@ -13,6 +11,32 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "razorpay-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "razorpay-openapi.yml: tagged paths POST /orders -> Orders",
+    "razorpay-openapi.yml: tagged paths GET /orders -> Orders",
+    "razorpay-openapi.yml: tagged paths GET /orders/{id} -> Orders",
+    "razorpay-openapi.yml: tagged paths PATCH /orders/{id} -> Orders",
+    "razorpay-openapi.yml: tagged paths GET /orders/{id}/payments -> Orders",
+    "razorpay-openapi.yml: tagged paths GET /payments -> Payments",
+    "razorpay-openapi.yml: tagged paths GET /payments/{id} -> Payments",
+    "razorpay-openapi.yml: tagged paths PATCH /payments/{id} -> Payments",
+    "razorpay-openapi.yml: tagged paths POST /payments/{id}/capture -> Payments",
+    "razorpay-openapi.yml: tagged paths GET /payments/{id}/card -> Payments",
+    "razorpay-openapi.yml: tagged paths POST /payments/{id}/refund -> Payments",
+    "razorpay-openapi.yml: tagged paths GET /payments/{id}/refunds -> Payments",
+    "razorpay-openapi.yml: tagged paths GET /refunds -> Refunds",
+    "razorpay-openapi.yml: tagged paths GET /refunds/{id} -> Refunds",
+    "razorpay-openapi.yml: tagged paths PATCH /refunds/{id} -> Refunds",
+    "razorpay-openapi.yml: declared missing tag: Orders",
+    "razorpay-openapi.yml: declared missing tag: Payments",
+    "razorpay-openapi.yml: declared missing tag: Refunds",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "razorpay-orders-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "razorpay-payments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "razorpay-refunds-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
