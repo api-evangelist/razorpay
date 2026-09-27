@@ -75,50 +75,7 @@ paths:
       tags:
       - Refunds
 components:
-  parameters:
-    skip:
-      name: skip
-      in: query
-      schema:
-        type: integer
-        default: 0
-    count:
-      name: count
-      in: query
-      schema:
-        type: integer
-        default: 10
-        maximum: 100
-    to:
-      name: to
-      in: query
-      schema:
-        type: integer
-        description: Unix timestamp (seconds) upper bound.
-    from:
-      name: from
-      in: query
-      schema:
-        type: integer
-        description: Unix timestamp (seconds) lower bound.
-    id:
-      name: id
-      in: path
-      required: true
-      schema:
-        type: string
   schemas:
-    RefundList:
-      type: object
-      properties:
-        entity:
-          type: string
-        count:
-          type: integer
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Refund'
     Refund:
       type: object
       properties:
@@ -150,6 +107,49 @@ components:
           type: object
           additionalProperties:
             type: string
+    RefundList:
+      type: object
+      properties:
+        entity:
+          type: string
+        count:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Refund'
+  parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    count:
+      name: count
+      in: query
+      schema:
+        type: integer
+        default: 10
+        maximum: 100
+    to:
+      name: to
+      in: query
+      schema:
+        type: integer
+        description: Unix timestamp (seconds) upper bound.
+    from:
+      name: from
+      in: query
+      schema:
+        type: integer
+        description: Unix timestamp (seconds) lower bound.
+    skip:
+      name: skip
+      in: query
+      schema:
+        type: integer
+        default: 0
   securitySchemes:
     basicAuth:
       type: http

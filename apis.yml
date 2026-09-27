@@ -48,6 +48,7 @@ tags:
   - Subscription
   - Payouts
   - Checkout
+  - A2A
 tags_raw:
   - Payments
   - Payment Gateway
@@ -57,6 +58,7 @@ tags_raw:
   - Subscriptions
   - Payouts
   - Checkout
+  - A2A
 url: >-
   https://raw.githubusercontent.com/api-evangelist/razorpay/refs/heads/main/apis.yml
 created: '2026-05-11'
