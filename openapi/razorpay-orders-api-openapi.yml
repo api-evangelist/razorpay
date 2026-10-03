@@ -123,29 +123,39 @@ paths:
       tags:
       - Orders
 components:
+  parameters:
+    count:
+      name: count
+      in: query
+      schema:
+        type: integer
+        default: 10
+        maximum: 100
+    from:
+      name: from
+      in: query
+      schema:
+        type: integer
+        description: Unix timestamp (seconds) lower bound.
+    id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    to:
+      name: to
+      in: query
+      schema:
+        type: integer
+        description: Unix timestamp (seconds) upper bound.
+    skip:
+      name: skip
+      in: query
+      schema:
+        type: integer
+        default: 0
   schemas:
-    PaymentList:
-      type: object
-      properties:
-        entity:
-          type: string
-        count:
-          type: integer
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Payment'
-    OrderList:
-      type: object
-      properties:
-        entity:
-          type: string
-        count:
-          type: integer
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Order'
     Order:
       type: object
       properties:
@@ -177,6 +187,50 @@ components:
             type: string
         created_at:
           type: integer
+    PaymentList:
+      type: object
+      properties:
+        entity:
+          type: string
+        count:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Payment'
+    OrderRequest:
+      type: object
+      required:
+      - amount
+      - currency
+      properties:
+        amount:
+          type: integer
+          description: Amount in smallest currency sub-unit (paise for INR).
+        currency:
+          type: string
+          description: ISO 4217 currency code.
+        receipt:
+          type: string
+        notes:
+          type: object
+          additionalProperties:
+            type: string
+        partial_payment:
+          type: boolean
+        payment_capture:
+          type: boolean
+    OrderList:
+      type: object
+      properties:
+        entity:
+          type: string
+        count:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Order'
     Payment:
       type: object
       properties:
@@ -234,60 +288,6 @@ components:
           type: object
           additionalProperties:
             type: string
-    OrderRequest:
-      type: object
-      required:
-      - amount
-      - currency
-      properties:
-        amount:
-          type: integer
-          description: Amount in smallest currency sub-unit (paise for INR).
-        currency:
-          type: string
-          description: ISO 4217 currency code.
-        receipt:
-          type: string
-        notes:
-          type: object
-          additionalProperties:
-            type: string
-        partial_payment:
-          type: boolean
-        payment_capture:
-          type: boolean
-  parameters:
-    id:
-      name: id
-      in: path
-      required: true
-      schema:
-        type: string
-    count:
-      name: count
-      in: query
-      schema:
-        type: integer
-        default: 10
-        maximum: 100
-    to:
-      name: to
-      in: query
-      schema:
-        type: integer
-        description: Unix timestamp (seconds) upper bound.
-    from:
-      name: from
-      in: query
-      schema:
-        type: integer
-        description: Unix timestamp (seconds) lower bound.
-    skip:
-      name: skip
-      in: query
-      schema:
-        type: integer
-        default: 0
   securitySchemes:
     basicAuth:
       type: http

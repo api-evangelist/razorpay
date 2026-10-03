@@ -191,6 +191,38 @@ paths:
       tags:
       - Payments
 components:
+  parameters:
+    count:
+      name: count
+      in: query
+      schema:
+        type: integer
+        default: 10
+        maximum: 100
+    from:
+      name: from
+      in: query
+      schema:
+        type: integer
+        description: Unix timestamp (seconds) lower bound.
+    id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    to:
+      name: to
+      in: query
+      schema:
+        type: integer
+        description: Unix timestamp (seconds) upper bound.
+    skip:
+      name: skip
+      in: query
+      schema:
+        type: integer
+        default: 0
   schemas:
     Refund:
       type: object
@@ -223,6 +255,17 @@ components:
           type: object
           additionalProperties:
             type: string
+    RefundList:
+      type: object
+      properties:
+        entity:
+          type: string
+        count:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Refund'
     PaymentList:
       type: object
       properties:
@@ -291,49 +334,6 @@ components:
           type: object
           additionalProperties:
             type: string
-    RefundList:
-      type: object
-      properties:
-        entity:
-          type: string
-        count:
-          type: integer
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Refund'
-  parameters:
-    id:
-      name: id
-      in: path
-      required: true
-      schema:
-        type: string
-    count:
-      name: count
-      in: query
-      schema:
-        type: integer
-        default: 10
-        maximum: 100
-    to:
-      name: to
-      in: query
-      schema:
-        type: integer
-        description: Unix timestamp (seconds) upper bound.
-    from:
-      name: from
-      in: query
-      schema:
-        type: integer
-        description: Unix timestamp (seconds) lower bound.
-    skip:
-      name: skip
-      in: query
-      schema:
-        type: integer
-        default: 0
   securitySchemes:
     basicAuth:
       type: http
