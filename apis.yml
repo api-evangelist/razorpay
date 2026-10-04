@@ -49,6 +49,7 @@ tags:
   - Payouts
   - Checkout
   - A2A
+  - Payment Processing
 tags_raw:
   - Payments
   - Payment Gateway
@@ -59,6 +60,7 @@ tags_raw:
   - Payouts
   - Checkout
   - A2A
+  - Payment Processing
 url: >-
   https://raw.githubusercontent.com/api-evangelist/razorpay/refs/heads/main/apis.yml
 created: '2026-05-11'
@@ -170,6 +172,9 @@ apis:
   - type: OpenAPI
     url: openapi/razorpay-refunds-api-openapi.yml
 common:
+  - type: CapabilityMap
+    url: capabilities/razorpay-capability-edges.yml
+    name: Razorpay Business Capability Map
   - type: AgentCard
     url: a2a/razorpay-a2a.yml
     name: A2A Agent Card
