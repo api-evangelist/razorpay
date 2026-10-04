@@ -76,6 +76,12 @@ paths:
       - Refunds
 components:
   parameters:
+    skip:
+      name: skip
+      in: query
+      schema:
+        type: integer
+        default: 0
     count:
       name: count
       in: query
@@ -101,13 +107,18 @@ components:
       schema:
         type: integer
         description: Unix timestamp (seconds) upper bound.
-    skip:
-      name: skip
-      in: query
-      schema:
-        type: integer
-        default: 0
   schemas:
+    RefundList:
+      type: object
+      properties:
+        entity:
+          type: string
+        count:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Refund'
     Refund:
       type: object
       properties:
@@ -139,17 +150,6 @@ components:
           type: object
           additionalProperties:
             type: string
-    RefundList:
-      type: object
-      properties:
-        entity:
-          type: string
-        count:
-          type: integer
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Refund'
   securitySchemes:
     basicAuth:
       type: http
