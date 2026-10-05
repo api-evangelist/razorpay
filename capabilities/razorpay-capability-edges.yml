@@ -1,0 +1,25 @@
+slug: razorpay
+provider: Razorpay
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 1
+edges:
+- tag: Payments
+  spec_file: razorpay-payments-api-openapi.yml
+  capability_id: BC-200.30
+  capability_id_l1: BC-200
+  capability_name: Accounts Receivable Management
+  confidence: 0.7
+  evidence: POST /payments/{id}/capture capturePayment Capture an authorized payment
+  reason: Operations authorise, capture and refund customer payments — merchant-side collection of customer
+    money, which maps to accounts receivable collection/cash application in the cross-industry taxonomy.
+    No dedicated payment-processing capability exists in this frame.
