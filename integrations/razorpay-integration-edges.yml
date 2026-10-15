@@ -1,6 +1,7 @@
 generated: '2026-10-15'
 method: searched
 checked:
+- https://a2aregistry.org/api/agents
 - woocommerce/integrations/woocommerce-integration-edges.yml
 source:
 - woocommerce/integrations/woocommerce-integration-edges.yml
@@ -22,3 +23,36 @@ edges:
   detected: '2026-10-15'
   detected_by: mirror-platform-listings.py
   category: extension
+- partner_name: A2A protocol (own Agent Card)
+  partner: null
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: A2A agent
+  evidence: https://razorpay.com/.well-known/agent-card.json
+  channel: provider-built
+  relationship: compatible
+  shape: a2a
+  evidence_kind: own-wellknown
+  degree: flavored
+  report_only: true
+  a2a_card:
+    grade: flavored
+    verdict: flavored
+    protocol_version: null
+    deviations:
+    - no-protocolVersion
+    card_subject: unknown
+  contract_reference:
+    register: provider's own /.well-known/agent-card.json
+    spec_file: null
+    standard: A2A
+    role: a2a-agent-card
+    registered_name: Razorpay
+    organization: Razorpay Software Private Limited
+    matched_domain: razorpay.com
+    matched_by: own-domain
+    detected_by: sweep-ai-agents.py
+    detected: '2026-10-15'
+  detected_by: sweep-ai-agents.py
+  first_seen: '2026-10-15'
