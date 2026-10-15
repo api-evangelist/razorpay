@@ -61,7 +61,7 @@
     app_slug: razorpay-1
     beta: false
     builder: unknown (not in the directory record)
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: razorpay-wordpress-own
   label: WordPress (own)
