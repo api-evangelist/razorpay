@@ -3,6 +3,7 @@ method: searched
 checked:
 - https://a2aregistry.org/api/agents
 - woocommerce/integrations/woocommerce-integration-edges.yml
+- wordpress/integrations/wordpress-integration-edges.yml
 source:
 - woocommerce/integrations/woocommerce-integration-edges.yml
 edges:
@@ -56,3 +57,20 @@ edges:
     detected: '2026-10-15'
   detected_by: sweep-ai-agents.py
   first_seen: '2026-10-15'
+- partner_name: WordPress (own)
+  partner: wordpress
+  partner_match: mirror
+  mirror_match: domain+name-among-holders
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://wordpress.org/plugins/woo-razorpay/
+  mirror_of: wordpress/integrations/wordpress-integration-edges.yml
+  apps:
+  - Razorpay for WooCommerce
+  listing_count: 1
+  detected: '2026-10-15'
+  detected_by: mirror-platform-listings.py
+  category: WordPress plugin
