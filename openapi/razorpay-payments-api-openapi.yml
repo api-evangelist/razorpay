@@ -191,7 +191,92 @@ paths:
       tags:
       - Payments
 components:
+  parameters:
+    count:
+      name: count
+      in: query
+      schema:
+        type: integer
+        default: 10
+        maximum: 100
+    id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    from:
+      name: from
+      in: query
+      schema:
+        type: integer
+        description: Unix timestamp (seconds) lower bound.
+    to:
+      name: to
+      in: query
+      schema:
+        type: integer
+        description: Unix timestamp (seconds) upper bound.
+    skip:
+      name: skip
+      in: query
+      schema:
+        type: integer
+        default: 0
   schemas:
+    Refund:
+      type: object
+      properties:
+        id:
+          type: string
+        entity:
+          type: string
+        amount:
+          type: integer
+        currency:
+          type: string
+        payment_id:
+          type: string
+        receipt:
+          type: string
+        status:
+          type: string
+          enum:
+          - pending
+          - processed
+          - failed
+        speed_requested:
+          type: string
+        speed_processed:
+          type: string
+        created_at:
+          type: integer
+        notes:
+          type: object
+          additionalProperties:
+            type: string
+    PaymentList:
+      type: object
+      properties:
+        entity:
+          type: string
+        count:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Payment'
+    RefundList:
+      type: object
+      properties:
+        entity:
+          type: string
+        count:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Refund'
     Payment:
       type: object
       properties:
@@ -249,91 +334,6 @@ components:
           type: object
           additionalProperties:
             type: string
-    RefundList:
-      type: object
-      properties:
-        entity:
-          type: string
-        count:
-          type: integer
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Refund'
-    PaymentList:
-      type: object
-      properties:
-        entity:
-          type: string
-        count:
-          type: integer
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Payment'
-    Refund:
-      type: object
-      properties:
-        id:
-          type: string
-        entity:
-          type: string
-        amount:
-          type: integer
-        currency:
-          type: string
-        payment_id:
-          type: string
-        receipt:
-          type: string
-        status:
-          type: string
-          enum:
-          - pending
-          - processed
-          - failed
-        speed_requested:
-          type: string
-        speed_processed:
-          type: string
-        created_at:
-          type: integer
-        notes:
-          type: object
-          additionalProperties:
-            type: string
-  parameters:
-    skip:
-      name: skip
-      in: query
-      schema:
-        type: integer
-        default: 0
-    count:
-      name: count
-      in: query
-      schema:
-        type: integer
-        default: 10
-        maximum: 100
-    from:
-      name: from
-      in: query
-      schema:
-        type: integer
-        description: Unix timestamp (seconds) lower bound.
-    id:
-      name: id
-      in: path
-      required: true
-      schema:
-        type: string
-    to:
-      name: to
-      in: query
-      schema:
-        type: integer
-        description: Unix timestamp (seconds) upper bound.
   securitySchemes:
     basicAuth:
       type: http
