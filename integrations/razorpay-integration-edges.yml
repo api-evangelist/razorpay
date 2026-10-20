@@ -1,12 +1,75 @@
-generated: '2026-10-15'
+generated: '2026-10-20'
 method: searched
+source:
+- woocommerce/integrations/woocommerce-integration-edges.yml
+- https://n8n.io/integrations/razorpay/
+- https://composio.dev/toolkits/razorpay
 checked:
 - https://a2aregistry.org/api/agents
 - https://zapier.com/api/v4/apps/
 - woocommerce/integrations/woocommerce-integration-edges.yml
 - wordpress/integrations/wordpress-integration-edges.yml
-source:
-- woocommerce/integrations/woocommerce-integration-edges.yml
+- https://composio.dev/toolkits/razorpay
+- https://monid.ai/tools/razorpay
+- https://n8n.io/integrations/razorpay/
+- https://zapier.com/apps/razorpay/integrations
+summary: null
+marketplace_apps:
+- marketplace: n8n
+  channel: open-source-node
+  app: razorpay
+  url: https://n8n.io/integrations/razorpay/
+  identity: title
+  pair_pages: 0
+  pairs: []
+- marketplace: composio
+  channel: agent-gateway
+  app: razorpay
+  url: https://composio.dev/toolkits/razorpay
+  identity: action-prefix
+  actions:
+  - key: RAZORPAY_CANCEL_INVOICE
+  - key: RAZORPAY_CANCEL_PAYMENT_LINK
+  - key: RAZORPAY_CREATE_AN_ORDER
+  - key: RAZORPAY_CREATE_CONTACT
+  - key: RAZORPAY_CREATE_CUSTOMER
+  - key: RAZORPAY_CREATE_INVOICE
+  - key: RAZORPAY_CREATE_ITEM
+  - key: RAZORPAY_CREATE_PAYMENT_LINK
+  - key: RAZORPAY_DELETE_INVOICE
+  - key: RAZORPAY_DELETE_ITEM
+  - key: RAZORPAY_FETCH_ALL_CUSTOMERS
+  - key: RAZORPAY_FETCH_ALL_INVOICES
+  - key: RAZORPAY_FETCH_ALL_PAYMENTS
+  - key: RAZORPAY_FETCH_ALL_PAYMENT_LINKS
+  - key: RAZORPAY_FETCH_ALL_REFUNDS_FOR_A_PAYMENT
+  - key: RAZORPAY_FETCH_A_PAYMENT_LINK
+  - key: RAZORPAY_FETCH_INVOICE_BY_ID
+  - key: RAZORPAY_FETCH_ORDERS
+  - key: RAZORPAY_FETCH_ORDERS_BY_ID
+  - key: RAZORPAY_FETCH_PAYMENTS_BY_ORDER
+  - key: RAZORPAY_FETCH_REFUNDS
+  - key: RAZORPAY_GET_CONTACT
+  - key: RAZORPAY_GET_CUSTOMER
+  - key: RAZORPAY_GET_FUND_ACCOUNT
+  - key: RAZORPAY_GET_ITEM
+  - key: RAZORPAY_GET_SETTLEMENT_RECON
+  - key: RAZORPAY_GET_TRANSFER_REVERSALS
+  - key: RAZORPAY_ISSUE_AN_INVOICE
+  - key: RAZORPAY_LIST_CUSTOMER_TOKENS
+  - key: RAZORPAY_LIST_DISPUTES
+  - key: RAZORPAY_LIST_FUND_ACCOUNTS
+  - key: RAZORPAY_LIST_FUND_VALIDATIONS
+  - key: RAZORPAY_LIST_ITEMS
+  - key: RAZORPAY_LIST_PAYMENT_DOWNTIMES
+  - key: RAZORPAY_NOTIFY_PAYMENT_LINK
+  - key: RAZORPAY_SEND_OR_RESEND_NOTIFICATION
+  - key: RAZORPAY_UPDATE_CONTACT
+  - key: RAZORPAY_UPDATE_CUSTOMER
+  - key: RAZORPAY_UPDATE_INVOICE
+  - key: RAZORPAY_UPDATE_ITEM
+  - key: RAZORPAY_UPDATE_ORDER
+  - key: RAZORPAY_UPDATE_PAYMENT_LINK
 edges:
 - partner_name: WooCommerce (own)
   partner: woocommerce
@@ -25,39 +88,6 @@ edges:
   detected: '2026-10-15'
   detected_by: mirror-platform-listings.py
   category: extension
-- partner_name: A2A protocol (own Agent Card)
-  partner: null
-  partner_match: register
-  type: register
-  direction: provider-built
-  category: A2A agent
-  evidence: https://razorpay.com/.well-known/agent-card.json
-  channel: provider-built
-  relationship: compatible
-  shape: a2a
-  evidence_kind: own-wellknown
-  degree: flavored
-  report_only: true
-  a2a_card:
-    grade: flavored
-    verdict: flavored
-    protocol_version: null
-    deviations:
-    - no-protocolVersion
-    card_subject: unknown
-  contract_reference:
-    register: provider's own /.well-known/agent-card.json
-    spec_file: null
-    standard: A2A
-    role: a2a-agent-card
-    registered_name: Razorpay
-    organization: Razorpay Software Private Limited
-    matched_domain: razorpay.com
-    matched_by: own-domain
-    detected_by: sweep-ai-agents.py
-    detected: '2026-10-15'
-  detected_by: sweep-ai-agents.py
-  first_seen: '2026-10-15'
 - partner_name: Zapier
   partner: zapier
   partner_match: aggregator
@@ -100,3 +130,37 @@ edges:
   detected: '2026-10-15'
   detected_by: mirror-platform-listings.py
   category: WordPress plugin
+- partner_name: A2A protocol (own Agent Card)
+  partner: null
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: A2A agent
+  evidence: https://razorpay.com/.well-known/agent-card.json
+  channel: provider-built
+  relationship: compatible
+  shape: a2a
+  evidence_kind: own-wellknown
+  degree: flavored
+  report_only: true
+  a2a_card:
+    grade: flavored
+    verdict: flavored
+    protocol_version: null
+    deviations:
+    - no-protocolVersion
+    card_subject: unknown
+  contract_reference:
+    register: provider's own /.well-known/agent-card.json
+    spec_file: null
+    standard: A2A
+    role: a2a-agent-card
+    registered_name: Razorpay
+    organization: Razorpay Software Private Limited
+    matched_domain: razorpay.com
+    matched_by: own-domain
+    detected_by: sweep-ai-agents.py
+    detected: '2026-10-19'
+  detected_by: sweep-ai-agents.py
+  first_seen: '2026-10-15'
+templates: []
