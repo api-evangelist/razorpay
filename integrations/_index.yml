@@ -82,6 +82,36 @@
     detected: '2026-10-20'
   status: not-a-workflow
   arazzo: null
+- slug: razorpay-y-combinator
+  label: Y Combinator
+  partner: y-combinator
+  partner_name: Y Combinator
+  category: accelerator portfolio participation
+  type: register
+  channel: standard-directory
+  evidence: https://www.ycombinator.com/companies/razorpay
+  source: edge
+  relationship: standard-participant
+  contract_reference:
+    register: Y Combinator company directory (ycombinator.com/companies/<slug>)
+    standard: null
+    spec_file: null
+    role: accelerator-portfolio-company
+    registered_name: Razorpay
+    register_id: https://www.ycombinator.com/companies/razorpay
+    register_country: IN
+    register_website: https://razorpay.com
+    matched_domain: razorpay.com
+    matched_by: domain+name-among-holders
+    signal_note: 'participation only: the accelerator''s own portfolio register lists the company (cohort / investment);
+      an ownership and participation record, not conformance or certification'
+    detected_by: sweep-accelerator-portfolios.py
+    detected: '2026-10-21'
+    batch: Winter 2015
+    year: '2014'
+    status: Active
+  status: not-a-workflow
+  arazzo: null
 - slug: razorpay-woocommerce-own
   label: WooCommerce (own)
   partner: woocommerce
@@ -121,33 +151,16 @@
   relationship: platform-app
   status: not-a-workflow
   arazzo: null
-- slug: razorpay-y-combinator
-  label: Y Combinator
-  partner: y-combinator
-  partner_name: Y Combinator
-  category: accelerator portfolio participation
-  type: register
-  channel: standard-directory
-  evidence: https://www.ycombinator.com/companies/razorpay
+- slug: razorpay-google-play-developer-google-play-sdk-index
+  label: Google Play Developer (Google Play SDK Index)
+  partner: google-play
+  partner_name: Google Play Developer (Google Play SDK Index)
+  category: mobile SDK (payments)
+  type: marketplace
+  marketplace: Google Play SDK Index
+  channel: partner-built
+  evidence: https://play.google.com/sdks/details/com-razorpay-customui
   source: edge
-  relationship: standard-participant
-  contract_reference:
-    register: Y Combinator company directory (ycombinator.com/companies/<slug>)
-    standard: null
-    spec_file: null
-    role: accelerator-portfolio-company
-    registered_name: Razorpay
-    register_id: https://www.ycombinator.com/companies/razorpay
-    register_country: IN
-    register_website: https://razorpay.com
-    matched_domain: razorpay.com
-    matched_by: domain+name-among-holders
-    signal_note: 'participation only: the accelerator''s own portfolio register lists the company (cohort / investment);
-      an ownership and participation record, not conformance or certification'
-    detected_by: sweep-accelerator-portfolios.py
-    detected: '2026-10-21'
-    batch: Winter 2015
-    year: '2014'
-    status: Active
+  relationship: platform-app
   status: not-a-workflow
   arazzo: null
