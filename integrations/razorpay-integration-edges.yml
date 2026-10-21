@@ -15,6 +15,11 @@ checked:
 - https://zapier.com/apps/razorpay/integrations
 - https://listings.pcisecuritystandards.org/assessors_and_solutions
 - bigcommerce/integrations/bigcommerce-integration-edges.yml
+- https://500.co/api/startups
+- https://500.co/companies
+- https://www.antler.co/portfolio
+- https://www.techstars.com/portfolio
+- https://www.ycombinator.com/companies
 summary: null
 marketplace_apps:
 - marketplace: n8n
@@ -214,4 +219,33 @@ edges:
   detected: '2026-10-20'
   detected_by: mirror-platform-listings.py
   category: Payments & Security, Payment Processors & Gateways
+- partner_name: Y Combinator
+  partner: y-combinator
+  partner_match: register
+  type: register
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://www.ycombinator.com/companies/razorpay
+  category: accelerator portfolio participation
+  contract_reference:
+    register: Y Combinator company directory (ycombinator.com/companies/<slug>)
+    standard: null
+    spec_file: null
+    role: accelerator-portfolio-company
+    registered_name: Razorpay
+    register_id: https://www.ycombinator.com/companies/razorpay
+    register_country: IN
+    register_website: https://razorpay.com
+    matched_domain: razorpay.com
+    matched_by: domain+name-among-holders
+    signal_note: 'participation only: the accelerator''s own portfolio register lists the company (cohort / investment);
+      an ownership and participation record, not conformance or certification'
+    detected_by: sweep-accelerator-portfolios.py
+    detected: '2026-10-21'
+    batch: Winter 2015
+    year: '2014'
+    status: Active
+  detected_by: sweep-accelerator-portfolios.py
+  first_seen: '2026-10-21'
 templates: []
