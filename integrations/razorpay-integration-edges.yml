@@ -21,6 +21,11 @@ checked:
 - https://www.techstars.com/portfolio
 - https://www.ycombinator.com/companies
 - google-play/integrations/google-play-integration-edges.yml
+- https://rbidocs.rbi.org.in/rdocs/content/DOCs/List_of_NBFCs_and_ARCs_registered_with_the_RBI.XLSX
+- https://sahamati.org.in/aa-ecosystem/
+- https://www.rbi.org.in/Scripts/BS_NBFCList.aspx
+- https://www.rbi.org.in/Scripts/PublicationsView.aspx?id=12043
+- https://www.rbi.org.in/Scripts/bs_viewcontent.aspx?Id=4392
 summary: null
 marketplace_apps:
 - marketplace: n8n
@@ -269,4 +274,41 @@ edges:
   category: mobile SDK (payments)
   publisher_verified:
   - Registered in Google Play SDK Console
+- partner_name: RBI authorised payment system operators (Payment and Settlement Systems Act, 2007)
+  partner: null
+  partner_match: register
+  type: register
+  channel: regulator-register
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://www.rbi.org.in/Scripts/PublicationsView.aspx?id=12043
+  category: India RBI-authorised payment system operator (Payment Aggregators)
+  contract_reference:
+    register: RBI authorised payment system operators (Payment and Settlement Systems Act, 2007)
+    spec_file: null
+    standard: null
+    role: payment-aggregator
+    registrations:
+    - registered_name: Razorpay Payments Private Limited
+      licences:
+      - PA-O- ‘Razorpay’
+      - PA-P
+      - PA- CB- I & O
+      register_sections:
+      - Payment Aggregators
+      register_country: IN
+      matched_domain: razorpay.com
+      matched_by: domain+name-among-holders
+      brands:
+      - Razorpay
+      matched_name: Razorpay
+      identity: wikidata Q109985545 'Razorpay' P856 https://razorpay.com
+    register_date: '2026-10-16'
+    signal_note: 'participation only: an RBI Certificate of Authorisation under the PSS Act 2007; the register publishes
+      no API conformance'
+    detected_by: sweep-india-rbi-regulated-entities.py
+    detected: '2026-10-22'
+    identity_source: wikidata P856 (labelled provenance step; Kin 2026-10-15 decision 1)
+  detected_by: sweep-india-rbi-regulated-entities.py
+  first_seen: '2026-10-22'
 templates: []
