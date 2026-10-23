@@ -201,3 +201,61 @@
     identity_source: wikidata P856 (labelled provenance step; Kin 2026-10-15 decision 1)
   status: not-a-workflow
   arazzo: null
+- slug: razorpay-pub-dev
+  label: pub.dev
+  partner: pub-dev
+  partner_name: pub.dev
+  category: official SDK (Dart/Flutter)
+  type: register
+  channel: package-registry
+  evidence: https://pub.dev/packages/razorpay_flutter
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: pub.dev (public registry JSON)
+    spec_file: null
+    language: Dart/Flutter
+    packages:
+    - name: razorpay_flutter
+      version: 1.4.7
+      released: '2026-09-21'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/razorpay_flutter
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:razorpay.com
+      matched_by: domain+name-among-holders
+    - name: razorpay_flutter_banking_wrapper_sdk
+      version: 1.0.0
+      released: '2026-02-26'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/razorpay_flutter_banking_wrapper_sdk
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:razorpay.com
+      matched_by: domain+name-among-holders
+    - name: razorpay_flutter_customui
+      version: 1.5.1
+      released: '2026-10-14'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/razorpay_flutter_customui
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:razorpay.com
+      matched_by: domain+name-among-holders
+    - name: razorpay_turbo
+      version: 1.0.0
+      released: '2024-08-13'
+      released_field: published
+      lapsed: true
+      page: https://pub.dev/packages/razorpay_turbo
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:razorpay.com
+      matched_by: domain+name-among-holders
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-php-dart-elixir-package-registries.py
+    detected: '2026-10-22'
+  status: not-a-workflow
+  arazzo: null

@@ -26,6 +26,9 @@ checked:
 - https://www.rbi.org.in/Scripts/BS_NBFCList.aspx
 - https://www.rbi.org.in/Scripts/PublicationsView.aspx?id=12043
 - https://www.rbi.org.in/Scripts/bs_viewcontent.aspx?Id=4392
+- https://hex.pm/api
+- https://packagist.org/packages
+- https://pub.dev/api
 summary: null
 marketplace_apps:
 - marketplace: n8n
@@ -310,5 +313,62 @@ edges:
     detected: '2026-10-22'
     identity_source: wikidata P856 (labelled provenance step; Kin 2026-10-15 decision 1)
   detected_by: sweep-india-rbi-regulated-entities.py
+  first_seen: '2026-10-22'
+- partner_name: pub.dev
+  partner: pub-dev
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (Dart/Flutter)
+  evidence: https://pub.dev/packages/razorpay_flutter
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: pub.dev (public registry JSON)
+    spec_file: null
+    language: Dart/Flutter
+    packages:
+    - name: razorpay_flutter
+      version: 1.4.7
+      released: '2026-09-21'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/razorpay_flutter
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:razorpay.com
+      matched_by: domain+name-among-holders
+    - name: razorpay_flutter_banking_wrapper_sdk
+      version: 1.0.0
+      released: '2026-02-26'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/razorpay_flutter_banking_wrapper_sdk
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:razorpay.com
+      matched_by: domain+name-among-holders
+    - name: razorpay_flutter_customui
+      version: 1.5.1
+      released: '2026-10-14'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/razorpay_flutter_customui
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:razorpay.com
+      matched_by: domain+name-among-holders
+    - name: razorpay_turbo
+      version: 1.0.0
+      released: '2024-08-13'
+      released_field: published
+      lapsed: true
+      page: https://pub.dev/packages/razorpay_turbo
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:razorpay.com
+      matched_by: domain+name-among-holders
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-php-dart-elixir-package-registries.py
+    detected: '2026-10-22'
+  detected_by: sweep-php-dart-elixir-package-registries.py
   first_seen: '2026-10-22'
 templates: []
