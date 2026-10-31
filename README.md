@@ -1,4 +1,4 @@
-# Razorpay (razorpay)
+# Razorpay
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,110 +66,136 @@
 
 Razorpay is India's leading full-stack payments and business banking platform, enabling merchants to accept, process, and disburse payments across cards, UPI, netbanking, wallets, EMI, and BNPL through a single integration. Its developer platform exposes a fully RESTful API at https://api.razorpay.com/v1 (with select v2 resources) returning JSON, secured by HTTP Basic authentication using a key_id and key_secret pair. Beyond core payment processing, Razorpay offers payment links, hosted pages, subscriptions, smart routing, refunds, settlements, payouts via RazorpayX, and KYC-driven onboarding.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/razorpay/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/razorpay/refs/heads/main/apis.yml)
+**Areas:** Payments · Payment Gateway · Fintech · India · UPI · Subscription · Payouts · Checkout · A2A · Payment Processing
 
-## Scope
+## Razorpay on APIs.io
 
-- **Type:** Index
+Everything profiled for Razorpay is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/razorpay/](https://apis.io/providers/razorpay/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (6)
 
-- Payments
-- Payment Gateway
-- Fintech
-- India
-- UPI
-- Subscriptions
-- Payouts
-- Checkout
+- [Razorpay Core REST API](https://apis.io/apis/razorpay/core-api/) — RESTful API covering orders, payments, refunds, customers, tokens, invoices, payment links, virtual accounts, settlements, transfers, subscriptions, and…
+- [Razorpay Payments API](https://apis.io/apis/razorpay/payments-api/) — Subset of the core REST API focused on creating orders, capturing authorized payments, fetching payment details, issuing refunds, and retrieving transfers…
+- [Razorpay Webhooks](https://apis.io/apis/razorpay/webhooks/) — Event-driven webhook surface that POSTs JSON payloads to a merchant-configured HTTPS endpoint when subscribed events occur across payments, orders, refunds,…
+- [Razorpay Orders API](https://apis.io/apis/razorpay/razorpay-orders-api/) — The Orders API from Razorpay — 3 operation(s) for orders.
+- [Razorpay Payments API](https://apis.io/apis/razorpay/razorpay-payments-api/) — The Payments API from Razorpay — 6 operation(s) for payments.
+- [Razorpay Refunds API](https://apis.io/apis/razorpay/razorpay-refunds-api/) — The Refunds API from Razorpay — 2 operation(s) for refunds.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-05-11
-- **Modified:** 2026-05-30
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### AsyncAPI (1)
 
-### Razorpay Core REST API
+Event-driven and webhook contracts.
 
-RESTful API covering orders, payments, refunds, customers, tokens, invoices, payment links, virtual accounts, settlements, transfers, subscriptions, and webhooks. Authentication is HTTP Basic using the API key_id as username and key_secret as password; all endpoints return JSON and follow standard HTTP semantics.
+- [Razorpay Webhooks](https://apis.io/asyncapis/razorpay/razorpay-webhooks-asyncapi/)
 
-- **Human URL:** [https://razorpay.com/docs/api/](https://razorpay.com/docs/api/)
-- **Base URL:** `https://api.razorpay.com/v1`
+#### Event channels (1)
 
-#### Tags
+Individual events and webhooks the provider emits.
 
-- Payments
-- REST API
-- Basic Auth
-- JSON
+- [webhook](https://apis.io/channels/razorpay/webhook/)
 
-#### Properties
+#### Agentic access (1)
 
-- [Documentation](https://razorpay.com/docs/api/)
-- [Authentication](https://razorpay.com/docs/api/authentication/)
-- [Postman  Collection](https://www.postman.com/razorpaydev/razorpay-public-workspace/overview)
-- [Webhooks](https://razorpay.com/docs/webhooks/)
-- [Errors](https://razorpay.com/docs/errors/)
-- [Postman Collection](collections/razorpay.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/razorpay.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Which operations an agent can call, which act, and which need a human in the loop.
 
-### Razorpay Payments API
+- [Razorpay Agentic Access](https://apis.io/agentic-access/razorpay/razorpay-agentic-access/)
 
-Subset of the core REST API focused on creating orders, capturing authorized payments, fetching payment details, issuing refunds, and retrieving transfers for split settlements between linked accounts.
+#### Collections (4)
 
-- **Human URL:** [https://razorpay.com/docs/api/payments/](https://razorpay.com/docs/api/payments/)
-- **Base URL:** `https://api.razorpay.com/v1`
+Postman and Open Collection request collections.
 
-#### Tags
+- [Razorpay Core REST API](https://apis.io/collections/razorpay/open-razorpay/)
+- [Razorpay Core REST Orders API](https://apis.io/collections/razorpay/open-razorpay-orders-api/)
+- [Razorpay Core REST Orders Payments API](https://apis.io/collections/razorpay/open-razorpay-payments-api/)
+- [Razorpay Core REST Orders Refunds API](https://apis.io/collections/razorpay/open-razorpay-refunds-api/)
 
-- Payments
-- Orders
-- Refunds
+#### Governance rules (1)
 
-#### Properties
+Spectral rulesets for the provider's contracts.
 
-- [Documentation](https://razorpay.com/docs/api/payments/)
-- [Postman Collection](collections/razorpay.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/razorpay.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Razorpay — asyncapi rules](https://apis.io/rules/razorpay/razorpay-asyncapi-spectral-rules/)
 
-### Razorpay Webhooks
+#### Security (4)
 
-Event-driven webhook surface that POSTs JSON payloads to a merchant-configured HTTPS endpoint when subscribed events occur across payments, orders, refunds, subscriptions, invoices, settlements, Smart Collect virtual accounts, payment links, Route transfers, disputes, and payment downtime advisories. Each delivery is signed with an HMAC-SHA256 hex digest of the raw request body using the merchant's webhook secret, transmitted via the X-Razorpay-Signature header.
+Authentication, trust centre, and vulnerability disclosure.
 
-- **Human URL:** [https://razorpay.com/docs/webhooks/](https://razorpay.com/docs/webhooks/)
+- [Razorpay Authentication](https://apis.io/security/razorpay/razorpay-authentication/)
+- [Razorpay Domain Security](https://apis.io/security/razorpay/razorpay-domain-security/)
+- [Razorpay Trust Center](https://apis.io/security/razorpay/razorpay-trust-center/)
+- [Razorpay Vulnerability Disclosure](https://apis.io/security/razorpay/razorpay-vulnerability-disclosure/)
 
-#### Tags
+#### OAuth scopes (1)
 
-- Webhooks
-- Events
-- AsyncAPI
-- HMAC-SHA256
+The permissions the API asks for.
 
-#### Properties
+- [Razorpay Scopes](https://apis.io/scopes/razorpay/razorpay-scopes/)
 
-- [Documentation](https://razorpay.com/docs/webhooks/)
-- [AsyncAPI](https://raw.githubusercontent.com/api-evangelist/razorpay/refs/heads/main/asyncapi/razorpay-webhooks-asyncapi.yml) — [AsyncAPI Specification](https://www.asyncapi.com/docs/reference/specification/latest)
-- [Signature Validation](https://razorpay.com/docs/webhooks/validate-test/)
-- [Event Payloads](https://razorpay.com/docs/webhooks/payloads/)
-- [Postman Collection](collections/razorpay.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/razorpay.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+## Where to find this API
 
-## Common Properties
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-- [LinkedIn](https://www.linkedin.com/company/razorpay)
 - [Website](https://razorpay.com)
 - [Documentation](https://razorpay.com/docs/)
-- [API Reference](https://razorpay.com/docs/api/)
+- [API reference](https://razorpay.com/docs/api/)
 - [Pricing](https://razorpay.com/pricing/)
-- [Sign Up](https://dashboard.razorpay.com/signup)
-- [Dashboard](https://dashboard.razorpay.com)
 - [Support](https://razorpay.com/support/)
-- [Status Page](https://status.razorpay.com)
-- [Git Hub](https://github.com/razorpay)
 - [Blog](https://razorpay.com/blog/)
+- [Status](https://status.razorpay.com)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 44.5** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 57.1 |
+| Contract quality | 54.5 |
+| Contract governance | 11.4 |
+| Operational transparency | 55.3 |
+| Developer ergonomics | 47.6 |
+| Access clarity | 31.6 |
+
+**Agent readiness 26.8** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | — |
+| Event Surface Described | derived (partial credit) |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | flavored (partial credit) |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | partial |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 29.5** — Payments
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/razorpay/](https://apis.io/providers/razorpay/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Razorpay: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/razorpay/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
